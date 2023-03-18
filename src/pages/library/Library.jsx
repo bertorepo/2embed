@@ -10,7 +10,7 @@ function Library() {
   const [currentType, setCurrentType] = useState("movie");
 
   useEffect(() => {
-    filterData(currentType);
+    // filterData(currentType);
   }, [currentType, filterData]);
 
   const handleFilterData = (type) => {

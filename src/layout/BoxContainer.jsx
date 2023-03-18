@@ -1,8 +1,8 @@
 import { Container } from "@chakra-ui/react";
 
-function BoxContainer({ children }) {
+function BoxContainer({ children, ...rest }) {
   return (
-    <Container maxW="8xl" pb={12}>
+    <Container {...rest} maxW="8xl" pb={12}>
       {children}
     </Container>
   );

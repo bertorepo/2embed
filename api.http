@@ -1,3 +1,6 @@
-GET http://www.omdbapi.com/?apikey=9931b7c&s=last&type=series
 
-###
+### Search for movie / series
+GET http://www.omdbapi.com/?apikey=9931b7c&s=last
+
+### Search for individual details by imdb id
+GET http://www.omdbapi.com/?apikey=9931b7c&i=tt0232500&plot=full
