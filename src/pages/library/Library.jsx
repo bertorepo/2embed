@@ -1,6 +1,7 @@
-import { Box,  ButtonGroup, Flex, Input, Text,} from "@chakra-ui/react";
+import { Box,  ButtonGroup, Flex, Input, Text,useColorModeValue,} from "@chakra-ui/react";
 import CustomButton from "../../components/CustomButton";
 import BoxContainer from "../../layout/BoxContainer"
+import CardsList from "./CardsList";
 
 function Library() {
   return (
@@ -17,10 +18,8 @@ function Library() {
         marginTop:"18px"
       }}>
         <Box as={ButtonGroup} p={4} isAttached>
-          
-          <CustomButton rounded _hover={{color:"cyan.500"}} colorScheme="blackAlpha" color="gray.500">Movies</CustomButton>
-          <CustomButton rounded _hover={{color:"cyan.500"}} colorScheme="blackAlpha" color="gray.500">TV Shows</CustomButton>
-        
+          <CustomButton rounded bg={"gray.900"} color="gray.500" >Movies</CustomButton>
+          <CustomButton bg={"gray.900"} rounded  color="gray.500">TV Shows</CustomButton>
         </Box>
         
         <Input variant="filled" placeholder="Search" width="sm" size="md" sx={{
@@ -28,8 +27,10 @@ function Library() {
         }} />
       </Flex>
 
-     
-   
+      {/* display list of movies / shows */}
+      
+      <CardsList />
+  
     </BoxContainer>
   )
 } 
