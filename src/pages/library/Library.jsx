@@ -1,9 +1,20 @@
 import { Box,  ButtonGroup, Flex, Input, Text,useColorModeValue,} from "@chakra-ui/react";
+import { useContext, useEffect } from "react";
 import CustomButton from "../../components/CustomButton";
 import BoxContainer from "../../layout/BoxContainer"
 import CardsList from "./CardsList";
+import {MoviesContext} from '../../context/MoviesContext'
 
 function Library() {
+
+  const { movies, fetchedAllMovies } = useContext(MoviesContext)
+  
+  useEffect(() => {
+    fetchedAllMovies();
+  }, [fetchedAllMovies])
+
+
+
   return (
     <BoxContainer>
       <Box mx={4} mt={10}>
@@ -18,7 +29,7 @@ function Library() {
         marginTop:"18px"
       }}>
         <Box as={ButtonGroup} p={4} isAttached>
-          <CustomButton rounded bg={"gray.900"} color="gray.500" >Movies</CustomButton>
+          <CustomButton  isActive rounded bg={"gray.900"} color="gray.500" >Movies</CustomButton>
           <CustomButton bg={"gray.900"} rounded  color="gray.500">TV Shows</CustomButton>
         </Box>
         
@@ -29,7 +40,7 @@ function Library() {
 
       {/* display list of movies / shows */}
       
-      <CardsList />
+      <CardsList movies={movies} />
   
     </BoxContainer>
   )

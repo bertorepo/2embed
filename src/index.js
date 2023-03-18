@@ -1,11 +1,11 @@
 import "@fontsource/poppins"
-
-
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import theme from "./theme"
+
+import MainProvider from "./context";
 
 
 
@@ -17,7 +17,9 @@ root.render(
   <>
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <ChakraProvider theme={theme}>
+      <MainProvider>
         <App />
+      </MainProvider>
     </ChakraProvider>
   </>
 )

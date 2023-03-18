@@ -7,7 +7,7 @@ function Dashboard() {
       <AppBar />
       <Library />
     </>
-  )
+  );
 }
 
 export default Dashboard;

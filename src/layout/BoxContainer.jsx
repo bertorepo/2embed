@@ -1,11 +1,11 @@
-import { Container } from "@chakra-ui/react"
+import { Container } from "@chakra-ui/react";
 
-function BoxContainer({children}) {
+function BoxContainer({ children }) {
   return (
-      <Container maxW="8xl">
-        {children}
-      </Container>
-  )
+    <Container maxW="8xl" pb={12}>
+      {children}
+    </Container>
+  );
 }
 
-export default BoxContainer
+export default BoxContainer;
