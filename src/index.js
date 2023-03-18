@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(el);
 
 root.render(
   <>
-    <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+   <ColorModeScript initialColorMode="dark" />
     <ChakraProvider theme={theme}>
       <MainProvider>
         <App />

@@ -1,4 +1,4 @@
-import { getAllMovies } from "../api/movie-api";
+import { getAllMovies, filterDataByType} from "../api/movie-api";
 
 const { createContext, useState, useCallback } = require("react");
 
@@ -14,11 +14,18 @@ function MoviesContextProvider({ children }) {
     const response = await getAllMovies();
     setMovies(response.data)
   }, [])
+
+  // filter data type
+  const filterData = useCallback(async (type) => {
+    const results = await filterDataByType(type)
+    setMovies(results)
+  },[])
  
   
   const config = {
     movies,
-    fetchedAllMovies
+    fetchedAllMovies,
+    filterData
   }
 
   return (

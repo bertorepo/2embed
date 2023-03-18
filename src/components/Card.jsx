@@ -1,4 +1,5 @@
 import { Box, Text, Flex, Image } from "@chakra-ui/react";
+import { capitalizeFirstLetter } from "../utils/";
 
 function Card({ movie }) {
   return (
@@ -11,28 +12,49 @@ function Card({ movie }) {
       boxShadow={"2xl"}
       display={"flex"}
       flexDirection={"column"}
+      cursor={"pointer"}
     >
       <Image
         objectFit="cover"
         objectPosition="center"
         src={`${movie.Poster}`}
         rounded={"md"}
+        sx={{
+          marginBottom: "4px",
+        }}
       />
 
-      <Flex
+      <Box
+        display={"flex"}
         flexDirection="column"
         sx={{
-          marginTop: "12px",
+          marginTop: "auto",
           padding: "4px 8px",
         }}
       >
         <Text fontSize="md" color="gray.300">
           {movie.Title}
         </Text>
-        <Text fontSize="sm" sx={{ paddingTop: "4px" }} color="gray.600">
-          {movie.Year}
-        </Text>
-      </Flex>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Text
+            fontSize="sm"
+            sx={{ paddingTop: "4px", marginBottom: "auto" }}
+            color="gray.600"
+          >
+            {movie.Year}
+          </Text>
+          <Text
+            fontSize="sm"
+            sx={{
+              paddingTop: "4px",
+              marginBottom: "auto",
+            }}
+            color="gray.600"
+          >
+            {capitalizeFirstLetter(movie.Type)}
+          </Text>
+        </Box>
+      </Box>
     </Box>
   );
 }

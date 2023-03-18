@@ -11,3 +11,13 @@ export const getAllMovies = async() => {
 
   return results;
 }
+
+export const filterDataByType = async(type) => {
+  const response = await axios.get(`${MAIN_URL}/movies`, {
+     headers: {
+      "Content-Type":"application/json"
+    }
+  })
+
+  return response.data.filter(resp =>  resp.Type === type);
+}
