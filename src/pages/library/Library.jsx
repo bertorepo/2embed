@@ -1,6 +1,8 @@
 import { Box, ButtonGroup, Flex, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
+import Loader from "../../components/Loader";
+import useLoader from "../../hooks/use-loader";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import BoxContainer from "../../layout/BoxContainer";
 import CardsList from "./CardsList";
@@ -8,9 +10,10 @@ import CardsList from "./CardsList";
 function Library() {
   const { movies, filterData } = useMovieContext();
   const [currentType, setCurrentType] = useState("movie");
+  const { isLoading } = useLoader(movies);
 
   useEffect(() => {
-    // filterData(currentType);
+    filterData(currentType);
   }, [currentType, filterData]);
 
   const handleFilterData = (type) => {
@@ -75,7 +78,7 @@ function Library() {
       </Flex>
 
       {/* display list of movies / shows */}
-      <CardsList movies={movies} />
+      {isLoading ? <Loader /> : <CardsList movies={movies} />}
     </BoxContainer>
   );
 }

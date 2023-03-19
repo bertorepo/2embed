@@ -1,8 +1,10 @@
 import { Box, Text, Image } from "@chakra-ui/react";
 
-function MovieDetails() {
+function MovieDetails({ info }) {
+  const { imdbID, Plot, Genre, Runtime, Title, Poster } = info;
+  const plotStr = Plot && Plot.split(".")[0];
   return (
-    <Box display={"flex"} columnGap={6} alignItems={"center"}>
+    <Box display={"flex"} columnGap={6} alignItems={"start"}>
       <Image
         w={"150px"}
         objectFit="cover"
@@ -11,9 +13,7 @@ function MovieDetails() {
         sx={{
           borderRadius: "8px",
         }}
-        src={
-          "https://m.media-amazon.com/images/M/MV5BNzlkNzVjMDMtOTdhZC00MGE1LTkxODctMzFmMjkwZmMxZjFhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
-        }
+        src={Poster}
       />
       <Box
         display={"flex"}
@@ -22,18 +22,15 @@ function MovieDetails() {
         rowGap={3}
         justify="start"
       >
-        <Text fontSize={"xl"}>The Fast and the Furious</Text>
+        <Text fontSize={"xl"}>{Title}</Text>
         <Text color={"gray.400"} fontSize={"sm"}>
-          Los Angeles street racer Dominic Toretto falls under the suspicion of
-          the LAPD as a string of high-speed electronics truck robberies rocks
-          the area. Brian O'Connor, an officer of the LAPD, joins the ranks of
-          Toretto's highly skilled racing crew undercover to convict Toretto.
+          {plotStr}.
         </Text>
         <Text color={"gray.400"} fontSize={"sm"}>
-          Duration: 106 min
+          Duration: {Runtime}
         </Text>
         <Text color={"gray.400"} fontSize={"sm"}>
-          Genres: Action, Crime, Thriller
+          Genres: {Genre}
         </Text>
       </Box>
     </Box>

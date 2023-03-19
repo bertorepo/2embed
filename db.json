@@ -196,5 +196,23 @@
       "Type": "series",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMzYyMjljMjctNDYzYS00OTc3LWJlNjUtNTVmNGZlN2UzMGRhXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_SX300.jpg"
     }
+  ],
+
+  "series" : [
+    {
+      "title":"game of Thrones",
+      "imdbID":"tt0083929",
+      "seasons":[
+        {
+          "seasonNumber": "1",
+          "episodes":[
+            {
+              "episodeNumber":"1",
+              "espisodeName":"Sample Episode Name"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

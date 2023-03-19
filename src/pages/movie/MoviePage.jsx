@@ -1,22 +1,58 @@
 import BoxContainer from "../../layout/BoxContainer";
-import { Box, Flex, Image, Text, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Iframe from "../../components/Iframe";
 import MovieDetails from "./MovieDetails";
 
+import { Link, useNavigate, useParams } from "react-router-dom";
+import useLoader from "../../hooks/use-loader";
+import Loader from "../../components/Loader";
+import { useMovieContext } from "../../hooks/use-movie-context";
+import { useEffect, useMemo, useState } from "react";
+
 function MoviePage() {
+  const { isLoading } = useLoader();
+  const [details, setDetails] = useState({});
+  const { imdb } = useParams();
+  const navigate = useNavigate();
+
+  const { fetchDetails } = useMovieContext();
+
+  useMemo(() => {
+    const runEffect = async () => {
+      const results = await fetchDetails(imdb);
+      if (results.Error) {
+        navigate("/library");
+      }
+      setDetails(results);
+    };
+
+    if (imdb) {
+      runEffect();
+    }
+  }, [imdb, fetchDetails, navigate]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <BoxContainer mt={12}>
       <Box
         display={"flex"}
-        alignContent="center"
-        columGap={3}
+        justifyItems="start"
+        columnGap={2}
         cursor={"pointer"}
         maxW={"5xl"}
         mx="auto"
+        _hover={{
+          color: "cyan.500",
+        }}
       >
         <ChevronLeftIcon h={6} w={6} />
-        <Text>Go Back to Library</Text>
+        <Link to="/library">
+          <Text>Go Back to Library</Text>
+        </Link>
       </Box>
       <Box
         mt={{ md: 4, lg: 8, sm: 4 }}
@@ -28,7 +64,7 @@ function MoviePage() {
         mx="auto"
       >
         <Box rounded={"lg"} width={"full"} height={"lg"}>
-          <Iframe />
+          <Iframe src={imdb} />
         </Box>
         <Box
           boxShadow={"2xl"}
@@ -37,7 +73,7 @@ function MoviePage() {
           width={"full"}
           p={12}
         >
-          <MovieDetails />
+          <MovieDetails info={details} />
         </Box>
       </Box>
     </BoxContainer>

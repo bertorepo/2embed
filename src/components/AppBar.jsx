@@ -20,6 +20,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { NavLink as CustomLink } from "react-router-dom";
+
 import logoImage from "../assets/images/logo.png";
 
 const navLinks = [
@@ -36,15 +38,15 @@ const navLinks = [
 const NavLink = ({ children }) => {
   return (
     <Link
+      as={"li"}
       px={2}
       py={1}
-      rounded={"sm"}
       _hover={{
         textDecoration: "none",
         bg: useColorModeValue("", "cyan.600"),
         color: useColorModeValue("", "gray.900"),
+        rounded: "md",
       }}
-      href={"#"}
     >
       {children}
     </Link>
@@ -88,9 +90,26 @@ function AppBar() {
                 as={"nav"}
                 spacing={4}
                 display={{ base: "none", md: "flex" }}
+                sx={{
+                  listStyleType: "none",
+                }}
               >
                 {navLinks.map((link) => {
-                  return <NavLink key={link.label}>{link.label}</NavLink>;
+                  return (
+                    <CustomLink
+                      key={link.label}
+                      to={link.path}
+                      style={({ isActive }) => {
+                        return {
+                          backgroundColor: isActive ? "#00A3C4" : "",
+                          color: isActive ? "#000" : "",
+                          borderRadius: "4px",
+                        };
+                      }}
+                    >
+                      <NavLink>{link.label}</NavLink>
+                    </CustomLink>
+                  );
                 })}
               </HStack>
 
