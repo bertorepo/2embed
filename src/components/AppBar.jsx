@@ -66,7 +66,7 @@ function AppBar() {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg="blackAlpha.500" px={4}>
         <Container maxW="8xl">
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <IconButton
@@ -155,9 +155,21 @@ function AppBar() {
 
           {isOpen && (
             <Box pb={4} display={{ md: "none" }}>
-              <Stack as={"nav"} spacing={4}>
+              <Stack
+                sx={{
+                  listStyleType: "none",
+                }}
+                as={"nav"}
+                spacing={4}
+              >
                 {navLinks.map((link) => (
-                  <NavLink key={link.label}>{link.label}</NavLink>
+                  <CustomLink
+                    key={link.label}
+                    to={link.path}
+                    style={isActiveStyle}
+                  >
+                    <NavLink>{link.label}</NavLink>
+                  </CustomLink>
                 ))}
               </Stack>
             </Box>

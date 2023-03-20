@@ -7,13 +7,40 @@ import {
   Th,
   Td,
   TableContainer,
-  HStack,
-  Icon,
 } from "@chakra-ui/react";
 
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { StarIcon } from "@chakra-ui/icons";
 
-function ListTable() {
+function ListTable({ config, data, keyFn }) {
+  const renderedHeaderRow = config.map((column) => {
+    return (
+      <Th
+        sx={{
+          width: column.label !== "title" ? "150px" : "",
+        }}
+        key={column.label}
+        color={"black"}
+      >
+        {column.label}
+      </Th>
+    );
+  });
+
+  const renderedColumnData = data.map((item) => {
+    const columnList = config.map((row) => {
+      return <Td key={row.label}>{row.render(item)}</Td>;
+    });
+
+    return (
+      <Tr
+        key={keyFn(item)}
+        _hover={{ bg: "blackAlpha.400", transition: "all 1s" }}
+      >
+        {columnList}
+      </Tr>
+    );
+  });
+
   return (
     <Box p={4} mt={2}>
       <TableContainer
@@ -24,48 +51,10 @@ function ListTable() {
         }}
       >
         <Table size="lg" colorScheme={"blackAlpha"}>
-          <Thead bg={"cyan.300"}>
-            <Tr>
-              <Th color={"black"}>Title</Th>
-              <Th
-                color={"black"}
-                sx={{
-                  width: "150px",
-                  textAlign: "center",
-                }}
-              >
-                IMDB
-              </Th>
-              <Th
-                color={"black"}
-                sx={{
-                  width: "150px",
-                  textAlign: "center",
-                }}
-              >
-                Actions
-              </Th>
-            </Tr>
+          <Thead bg={"cyan.600"}>
+            <Tr>{renderedHeaderRow}</Tr>
           </Thead>
-          <Tbody>
-            {[1, 2, 3, 4, 5, 6, 8, 9, 10].map((item) => {
-              return (
-                <Tr
-                  key={item}
-                  _hover={{ bg: "blackAlpha.400", transition: "all 1s" }}
-                >
-                  <Td>The Fallen Angels (2023)</Td>
-                  <Td>tt5858</Td>
-                  <Td>
-                    <HStack spacing={4}>
-                      <Icon color={"cyan.600"} as={EditIcon} />
-                      <Icon color={"red.600"} as={DeleteIcon} />
-                    </HStack>
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
+          <Tbody>{renderedColumnData}</Tbody>
         </Table>
       </TableContainer>
     </Box>

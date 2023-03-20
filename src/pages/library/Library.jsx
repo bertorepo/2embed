@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
 import Loader from "../../components/Loader";
@@ -8,28 +7,12 @@ import BoxContainer from "../../layout/BoxContainer";
 import CardsList from "./CardsList";
 import Header from "../../components/Header";
 import ButtonGroup from "../../components/ButtonGroup";
+import { useFilterList } from "../../hooks/use-filter-list";
 
 function Library() {
-  const { movies, filterData } = useMovieContext();
-  const [currentType, setCurrentType] = useState("movie");
+  const { movies } = useMovieContext();
+  const { handleFilterData, currentType } = useFilterList();
   const { isLoading } = useLoader(movies);
-
-  useEffect(() => {
-    filterData(currentType);
-  }, [currentType, filterData]);
-
-  const handleFilterData = (type) => {
-    // this will prevent from fetchinf from server again if current type is
-    // the same as type argument
-    if (currentType && currentType === type) {
-      return;
-    }
-
-    if (type) {
-      filterData(type);
-      setCurrentType(type);
-    }
-  };
 
   return (
     <BoxContainer>

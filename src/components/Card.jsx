@@ -19,6 +19,10 @@ function Card({ movie }) {
           display={"flex"}
           flexDirection={"column"}
           cursor={"pointer"}
+          _hover={{
+            bg: "blackAlpha.600",
+            transition: "all .8s",
+          }}
           sx={{
             height: "full",
           }}
