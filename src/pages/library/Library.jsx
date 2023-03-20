@@ -1,4 +1,3 @@
-import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
@@ -40,6 +39,7 @@ function Library() {
             isActive={currentType === "movie" ? true : false}
             rounded
             onClick={() => handleFilterData("movie")}
+            color="gray.500"
           >
             Movies
           </CustomButton>
