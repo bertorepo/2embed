@@ -19,6 +19,9 @@ function Card({ movie }) {
           display={"flex"}
           flexDirection={"column"}
           cursor={"pointer"}
+          sx={{
+            height: "full",
+          }}
         >
           <Image
             objectFit="cover"
@@ -27,6 +30,8 @@ function Card({ movie }) {
             rounded={"md"}
             sx={{
               marginBottom: "4px",
+              height: "280px",
+              width: "250px",
             }}
           />
 
@@ -38,7 +43,7 @@ function Card({ movie }) {
               padding: "4px 8px",
             }}
           >
-            <Text fontSize="md" color="gray.300">
+            <Text fontSize="md" color="gray.400">
               {movie.Title}
             </Text>
             <Box

@@ -1,11 +1,14 @@
-import { Box, ButtonGroup, Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
+import InputField from "../../components/InputField";
 import Loader from "../../components/Loader";
 import useLoader from "../../hooks/use-loader";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import BoxContainer from "../../layout/BoxContainer";
 import CardsList from "./CardsList";
+import Header from "../../components/Header";
+import ButtonGroup from "../../components/ButtonGroup";
 
 function Library() {
   const { movies, filterData } = useMovieContext();
@@ -31,22 +34,8 @@ function Library() {
 
   return (
     <BoxContainer>
-      <Box mx={4} mt={10}>
-        <Text fontSize="3xl">Library</Text>
-        <Text color="gray.500" fontSize="md">
-          Latest Movies and Shows
-        </Text>
-      </Box>
-
-      <Flex
-        flexDirection={{ sm: "column", md: "row" }}
-        justifyContent="space-between"
-        alignItems="center"
-        sx={{
-          marginTop: "18px",
-        }}
-      >
-        <Box as={ButtonGroup} p={4} isAttached>
+      <Header pageHeading="Library" pageSubHeading="Latest Movies and Tv Shows">
+        <ButtonGroup>
           <CustomButton
             isActive={currentType === "movie" ? true : false}
             rounded
@@ -63,20 +52,11 @@ function Library() {
           >
             TV Shows
           </CustomButton>
-        </Box>
+        </ButtonGroup>
 
-        <Input
-          variant="filled"
-          placeholder="Search"
-          width="sm"
-          size="md"
-          sx={{
-            rounded: "full",
-            marginRight: "14px",
-          }}
-        />
-      </Flex>
-
+        {/* search */}
+        <InputField />
+      </Header>
       {/* display list of movies / shows */}
       {isLoading ? <Loader /> : <CardsList movies={movies} />}
     </BoxContainer>

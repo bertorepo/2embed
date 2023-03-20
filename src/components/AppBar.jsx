@@ -56,6 +56,14 @@ const NavLink = ({ children }) => {
 function AppBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const isActiveStyle = ({ isActive }) => {
+    return {
+      backgroundColor: isActive ? "#00A3C4" : "",
+      color: isActive ? "#000" : "",
+      borderRadius: "4px",
+    };
+  };
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -99,13 +107,7 @@ function AppBar() {
                     <CustomLink
                       key={link.label}
                       to={link.path}
-                      style={({ isActive }) => {
-                        return {
-                          backgroundColor: isActive ? "#00A3C4" : "",
-                          color: isActive ? "#000" : "",
-                          borderRadius: "4px",
-                        };
-                      }}
+                      style={isActiveStyle}
                     >
                       <NavLink>{link.label}</NavLink>
                     </CustomLink>
@@ -116,7 +118,16 @@ function AppBar() {
               {/* logo */}
             </HStack>
 
-            <Flex alignItems={"center"}>
+            <Flex
+              alignItems={"center"}
+              sx={{
+                listStyleType: "none",
+              }}
+              columnGap={3}
+            >
+              <CustomLink to="/admin" style={isActiveStyle}>
+                <NavLink>Admin</NavLink>
+              </CustomLink>
               <Menu>
                 <MenuButton
                   as={Button}

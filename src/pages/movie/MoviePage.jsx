@@ -23,6 +23,7 @@ function MoviePage() {
       const results = await fetchDetails(imdb);
       if (results.Error) {
         navigate("/library");
+        return;
       }
       setDetails(results);
     };
@@ -63,7 +64,7 @@ function MoviePage() {
         maxW={"5xl"}
         mx="auto"
       >
-        <Box rounded={"lg"} width={"full"} height={"lg"}>
+        <Box rounded={"lg"} width={"full"} height={{ sm: "sm", md: "lg" }}>
           <Iframe src={imdb} />
         </Box>
         <Box
