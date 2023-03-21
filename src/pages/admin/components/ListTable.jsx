@@ -9,18 +9,10 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-import { StarIcon } from "@chakra-ui/icons";
-
 function ListTable({ config, data, keyFn }) {
   const renderedHeaderRow = config.map((column) => {
     return (
-      <Th
-        sx={{
-          width: column.label !== "title" ? "150px" : "",
-        }}
-        key={column.label}
-        color={"black"}
-      >
+      <Th key={column.label} color={"black"}>
         {column.label}
       </Th>
     );

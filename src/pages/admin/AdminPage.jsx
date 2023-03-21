@@ -10,14 +10,33 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 
 import { useFilterList } from "../../hooks/use-filter-list";
 import { useMovieContext } from "../../hooks/use-movie-context";
+import Pagination from "../../components/Pagination";
+import { usePaginate } from "../../hooks/use-paginate";
 
 function AdminPage() {
   const { movies } = useMovieContext();
   const { currentType, handleFilterData } = useFilterList();
+  const {
+    pageCount,
+    handlePageClick,
+    currentItems,
+    setCurrentPageNumber,
+    currentPageNumber,
+    selectedPage,
+    setSelectedPage,
+  } = usePaginate(movies);
+
+  const handleClick = (type) => {
+    handleFilterData(type);
+    if (currentPageNumber !== 0) {
+      setCurrentPageNumber(0);
+      setSelectedPage(0);
+    }
+  };
 
   const config = [
     {
-      label: "title",
+      label: "Title",
       render: (item) => (
         <>
           <Flex alignItems="center" columnGap={3}>
@@ -42,7 +61,7 @@ function AdminPage() {
   ];
 
   const keyFn = (item) => {
-    return item.label;
+    return item.Title;
   };
 
   return (
@@ -51,7 +70,7 @@ function AdminPage() {
         <ButtonGroup>
           <CustomButton
             isActive={currentType === "movie" ? true : false}
-            onClick={() => handleFilterData("movie")}
+            onClick={() => handleClick("movie")}
             rounded
             color="gray.500"
           >
@@ -59,7 +78,7 @@ function AdminPage() {
           </CustomButton>
           <CustomButton
             isActive={currentType === "series" ? true : false}
-            onClick={() => handleFilterData("series")}
+            onClick={() => handleClick("series")}
             rounded
             color="gray.500"
           >
@@ -84,7 +103,15 @@ function AdminPage() {
           {currentType === "movie" ? "Add Movie" : "Add Series"}
         </CustomButton>
       </Box>
-      <ListTable keyFn={keyFn} data={movies} config={config} />
+      <ListTable keyFn={keyFn} data={currentItems} config={config} />
+
+      {/* Pagination */}
+      <Pagination
+        currentPageNumber={currentPageNumber}
+        selectedPage={selectedPage}
+        pageCount={pageCount}
+        handlePageClick={handlePageClick}
+      />
     </BoxContainer>
   );
 }
