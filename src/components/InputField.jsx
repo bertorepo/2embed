@@ -1,6 +1,6 @@
 import { Input } from "@chakra-ui/react";
 
-function InputField() {
+function InputField({ ...rest }) {
   return (
     <Input
       variant="filled"
@@ -11,6 +11,7 @@ function InputField() {
         rounded: "full",
         marginRight: "14px",
       }}
+      {...rest}
     />
   );
 }

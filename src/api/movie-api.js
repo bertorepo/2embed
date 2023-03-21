@@ -35,3 +35,20 @@ export const getMovieDetailsById = async (imdbId) => {
 
   return response;
 };
+
+// ADMIN callbacks
+
+export const searchMovie = async (title, type = "movie") => {
+  const response = await axios.get(`${OMDB_URL}/`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      apikey: API_KEY,
+      type: type === "movie" ? "movie" : "series",
+      s: title.toLowerCase(),
+    },
+  });
+
+  return response;
+};

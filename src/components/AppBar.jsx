@@ -108,6 +108,7 @@ function AppBar() {
                       key={link.label}
                       to={link.path}
                       style={isActiveStyle}
+                      replace
                     >
                       <NavLink>{link.label}</NavLink>
                     </CustomLink>

@@ -1,11 +1,12 @@
+import AdminContextProvider from "./AdminContext";
 import MoviesContextProvider from "./MoviesContext";
 
-function MainProvider({children}) {
+function MainProvider({ children }) {
   return (
     <MoviesContextProvider>
-      {children}
-   </MoviesContextProvider>
- ) 
+      <AdminContextProvider>{children}</AdminContextProvider>
+    </MoviesContextProvider>
+  );
 }
 
 export default MainProvider;

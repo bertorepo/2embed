@@ -12,6 +12,7 @@ import { useFilterList } from "../../hooks/use-filter-list";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import Pagination from "../../components/Pagination";
 import { usePaginate } from "../../hooks/use-paginate";
+import { Link } from "react-router-dom";
 
 function AdminPage() {
   const { movies } = useMovieContext();
@@ -92,16 +93,18 @@ function AdminPage() {
 
       {/* table */}
       <Box display="flex" mx={4} mt={4} color="cyan.500" justifyContent={"end"}>
-        <CustomButton
-          _hover={{
-            bg: "cyan.500",
-            color: "black",
-          }}
-          leftIcon={<AddIcon h={3} w={3} />}
-          rounded
-        >
-          {currentType === "movie" ? "Add Movie" : "Add Series"}
-        </CustomButton>
+        <Link to="/admin/add">
+          <CustomButton
+            _hover={{
+              bg: "cyan.500",
+              color: "black",
+            }}
+            leftIcon={<AddIcon h={3} w={3} />}
+            rounded
+          >
+            Add Movie/Series
+          </CustomButton>
+        </Link>
       </Box>
       <ListTable keyFn={keyFn} data={currentItems} config={config} />
 

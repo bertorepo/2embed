@@ -1,3 +1,4 @@
+import AddMoviePage from "../pages/admin/AddMoviePage";
 import AdminPage from "../pages/admin/AdminPage";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Library from "../pages/library/Library";
@@ -17,6 +18,7 @@ export const mainRoot = createBrowserRouter(
       <Route path="/library" element={<Library />} />
       <Route path="/library/movie/:imdb" element={<MoviePage />} />
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/add" element={<AddMoviePage />} />
       <Route path="*" element={<Dashboard />} />
     </Route>
   )
