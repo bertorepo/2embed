@@ -53,11 +53,15 @@ export const searchMovie = async (title, type = "movie") => {
 };
 
 export const addMovieToServer = async (movie) => {
-  const results = await axios.post(`${MAIN_URL}/movies`, movie, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const results = await axios.post(
+    `${MAIN_URL}/movies`,
+    { ...movie },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   return results;
 };
