@@ -20,11 +20,13 @@ import ListTable from "./components/ListTable";
 import CustomButton from "../../components/CustomButton";
 import { useAdminContext } from "../../hooks/use-admin-context";
 import { useMovieContext } from "../../hooks/use-movie-context";
+import useLoader from "../../hooks/use-loader";
 import { capitalizeFirstLetter } from "../../utils/index";
 import CustomModal from "../../components/CustomModal";
 import Iframe from "../../components/Iframe";
 import { useFilterList } from "../../hooks/use-filter-list";
 import EmptyPage from "../../components/EmptyPage";
+import Loader from "../../components/Loader";
 
 const options = [
   { label: "Movie", value: "movie" },
@@ -38,6 +40,7 @@ function AddMoviePage() {
   const { movies, addMovie } = useMovieContext();
   const { handleFilterData } = useFilterList();
   const [type, setType] = useState(options[0].value);
+  const { isLoading } = useLoader();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -146,6 +149,10 @@ function AddMoviePage() {
     }
     setTitle("");
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <BoxContainer>

@@ -14,10 +14,13 @@ import Pagination from "../../components/Pagination";
 import { usePaginate } from "../../hooks/use-paginate";
 import { Link } from "react-router-dom";
 import EmptyPage from "../../components/EmptyPage";
+import useLoader from "../../hooks/use-loader";
+import Loader from "../../components/Loader";
 
 function AdminPage() {
   const { movies } = useMovieContext();
   const { currentType, handleFilterData } = useFilterList();
+  const { isLoading } = useLoader();
   const {
     pageCount,
     handlePageClick,
@@ -66,6 +69,21 @@ function AdminPage() {
     return item.Title;
   };
 
+  const loadDataPage = isLoading ? (
+    <Loader />
+  ) : (
+    <>
+      <ListTable keyFn={keyFn} data={currentItems} config={config} />
+
+      <Pagination
+        currentPageNumber={currentPageNumber}
+        selectedPage={selectedPage}
+        pageCount={pageCount}
+        handlePageClick={handlePageClick}
+      />
+    </>
+  );
+
   return (
     <BoxContainer>
       <Header pageHeading="Admin Area" pageSubHeading="Manage Movies and Shows">
@@ -108,20 +126,7 @@ function AdminPage() {
         </Link>
       </Box>
 
-      {currentItems.length === 0 ? (
-        <EmptyPage />
-      ) : (
-        <>
-          <ListTable keyFn={keyFn} data={currentItems} config={config} />
-
-          <Pagination
-            currentPageNumber={currentPageNumber}
-            selectedPage={selectedPage}
-            pageCount={pageCount}
-            handlePageClick={handlePageClick}
-          />
-        </>
-      )}
+      {currentItems.length === 0 ? <EmptyPage /> : loadDataPage}
     </BoxContainer>
   );
 }

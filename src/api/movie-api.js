@@ -37,7 +37,6 @@ export const getMovieDetailsById = async (imdbId) => {
 };
 
 // ADMIN callbacks
-
 export const searchMovie = async (title, type = "movie") => {
   const response = await axios.get(`${OMDB_URL}/`, {
     headers: {
@@ -54,18 +53,11 @@ export const searchMovie = async (title, type = "movie") => {
 };
 
 export const addMovieToServer = async (movie) => {
-  const results = await axios.post(
-    `${MAIN_URL}/movies`,
-    {
-      id: crypto.randomUUID,
-      ...movie,
+  const results = await axios.post(`${MAIN_URL}/movies`, movie, {
+    headers: {
+      "Content-Type": "application/json",
     },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  });
 
   return results;
 };

@@ -127,6 +127,38 @@
       "Type": "movie",
       "Poster": "https://m.media-amazon.com/images/M/MV5BMWU0MGYwZWQtMzcwYS00NWVhLTlkZTAtYWVjOTYwZTBhZTBiXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
       "id": 17
+    },
+    {
+      "Title": "Spider-Man",
+      "Year": "2002",
+      "imdbID": "tt0145487",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_SX300.jpg",
+      "id": 18
+    },
+    {
+      "Title": "Doctor Strange in the Multiverse of Madness",
+      "Year": "2022",
+      "imdbID": "tt9419884",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNWM0ZGJlMzMtZmYwMi00NzI3LTgzMzMtNjMzNjliNDRmZmFlXkEyXkFqcGdeQXVyMTM1MTE1NDMx._V1_SX300.jpg",
+      "id": 19
+    },
+    {
+      "Title": "Fast & Furious",
+      "Year": "2009",
+      "imdbID": "tt1013752",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYjQ1ZTMxNzgtZDcxOC00NWY5LTk3ZjAtYzRhMDhlNDZlOWEzXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg",
+      "id": 20
+    },
+    {
+      "Title": "2 Fast 2 Furious",
+      "Year": "2003",
+      "imdbID": "tt0322259",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMzExYjcyYWMtY2JkOC00NDUwLTg2OTgtMDI3MGY2OWQzMDE2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+      "id": 21
     }
   ],
   "series": [

@@ -7,9 +7,11 @@ import EmptyPage from "../../components/EmptyPage";
 function CardsList() {
   const { movies } = useMovieContext();
 
-  const renderedMovies = movies.map((movie) => {
-    return <Card key={movie.imdbID} movie={movie} />;
-  });
+  const renderedMovies =
+    movies &&
+    movies.map((movie) => {
+      return <Card key={movie.id} movie={movie} />;
+    });
   return (
     <Box mx={4} mt={10}>
       <Flex
