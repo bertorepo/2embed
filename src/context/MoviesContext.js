@@ -2,9 +2,10 @@ import {
   getAllMovies,
   filterDataByType,
   getMovieDetailsById,
+  addMovieToServer,
 } from "../api/movie-api";
 
-const { createContext, useState, useCallback } = require("react");
+const { createContext, useState, useCallback, useMemo } = require("react");
 
 const MoviesContext = createContext();
 
@@ -30,11 +31,17 @@ function MoviesContextProvider({ children }) {
     }
   }, []);
 
+  const addMovie = useCallback(async (movie) => {
+    const result = await addMovieToServer(movie);
+    setMovies([...movies, result]);
+  }, []);
+
   const config = {
     movies,
     fetchedAllMovies,
     filterData,
     fetchDetails,
+    addMovie,
   };
 
   return (

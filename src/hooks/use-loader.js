@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useLoader = (dependency = null) => {
+const useLoader = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const useLoader = (dependency = null) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [dependency]);
+  }, []);
   return { isLoading };
 };
 

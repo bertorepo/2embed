@@ -18,6 +18,7 @@ const AdminContextProvider = ({ children }) => {
   const adminConfig = {
     findMovie,
     listData,
+    setListData,
   };
 
   return (

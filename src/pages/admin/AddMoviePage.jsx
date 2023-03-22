@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -7,6 +7,9 @@ import {
   Select,
   Center,
   Text,
+  useDisclosure,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -16,7 +19,12 @@ import BoxContainer from "../../layout/BoxContainer";
 import ListTable from "./components/ListTable";
 import CustomButton from "../../components/CustomButton";
 import { useAdminContext } from "../../hooks/use-admin-context";
+import { useMovieContext } from "../../hooks/use-movie-context";
 import { capitalizeFirstLetter } from "../../utils/index";
+import CustomModal from "../../components/CustomModal";
+import Iframe from "../../components/Iframe";
+import { useFilterList } from "../../hooks/use-filter-list";
+import EmptyPage from "../../components/EmptyPage";
 
 const options = [
   { label: "Movie", value: "movie" },
@@ -24,9 +32,17 @@ const options = [
 ];
 
 function AddMoviePage() {
-  const { findMovie, listData } = useAdminContext();
   const [title, setTitle] = useState("");
+  const [imdbId, setImdbId] = useState("");
+  const { findMovie, listData } = useAdminContext();
+  const { movies, addMovie } = useMovieContext();
+  const { handleFilterData } = useFilterList();
   const [type, setType] = useState(options[0].value);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    handleFilterData("movie");
+  }, [handleFilterData, movies]);
 
   const config = [
     {
@@ -44,22 +60,59 @@ function AddMoviePage() {
       render: (item) => (
         <HStack spacing={4}>
           {item.Type === "movie" ? (
-            <CustomButton rounded color="green.300">
+            <CustomButton
+              onClick={() => handlePreviewStream(item)}
+              size="sm"
+              rounded
+              color={
+                handleCheckMovie(item.imdbID) ? "whiteAlpha.400" : "green.300"
+              }
+              isDisabled={handleCheckMovie(item.imdbID)}
+            >
               Preview Stream
             </CustomButton>
           ) : (
-            <CustomButton rounded color="green.300">
+            <CustomButton size="sm" rounded color="green.300">
               Get Seasons
             </CustomButton>
           )}
 
-          <CustomButton bg="cyan.600" rounded>
-            Details
+          <CustomButton
+            isDisabled={handleCheckMovie(item.imdbID)}
+            onClick={() => handleAddMovie(item)}
+            size="sm"
+            bg={handleCheckMovie(item.imdbID) ? "blackAlpha.400" : "cyan.600"}
+            color={handleCheckMovie(item.imdbID) ? "whiteAlpha.400" : ""}
+            rounded
+          >
+            {handleCheckMovie(item.imdbID) ? "Already Added" : "Add to server"}
           </CustomButton>
         </HStack>
       ),
     },
   ];
+
+  /*=========================================== */
+
+  const handlePreviewStream = (item) => {
+    onOpen();
+    setImdbId(item.imdbID);
+  };
+
+  const handleCheckMovie = (id) => {
+    const result = movies.findIndex((item) => item.imdbID === id);
+    return result !== -1 ? true : false;
+  };
+
+  const handleAddMovie = async (movie) => {
+    if (movie) {
+      await addMovie(movie);
+
+      alert("added");
+    }
+  };
+
+  /*=========================================== */
 
   function keyFn(item) {
     return item.imdbID;
@@ -92,16 +145,6 @@ function AddMoviePage() {
       alert(response);
     }
     setTitle("");
-  };
-
-  const renderEmpty = () => {
-    return (
-      <Center mt={10}>
-        <Text color="gray.700" fontSize={"3xl"}>
-          Populate Data in the Search Box!
-        </Text>
-      </Center>
-    );
   };
 
   return (
@@ -175,11 +218,29 @@ function AddMoviePage() {
         {/* table */}
 
         {listData.length === 0 ? (
-          renderEmpty()
+          <EmptyPage message={"Populate Data in the Search Box!"} />
         ) : (
           <ListTable keyFn={keyFn} data={listData} config={config} />
         )}
       </Box>
+
+      {/* MODAL */}
+      <CustomModal
+        size={{ md: "md", lg: "6xl", sm: "sm" }}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalBody pb={6}>
+          <Box height={{ lg: "4xl" }}>
+            <Iframe src={imdbId} />
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <CustomButton onClick={onClose} rounded bg="cyan.600">
+            Close
+          </CustomButton>
+        </ModalFooter>
+      </CustomModal>
     </BoxContainer>
   );
 }

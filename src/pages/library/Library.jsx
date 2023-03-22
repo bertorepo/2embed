@@ -2,7 +2,6 @@ import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
 import Loader from "../../components/Loader";
 import useLoader from "../../hooks/use-loader";
-import { useMovieContext } from "../../hooks/use-movie-context";
 import BoxContainer from "../../layout/BoxContainer";
 import CardsList from "./CardsList";
 import Header from "../../components/Header";
@@ -10,9 +9,8 @@ import ButtonGroup from "../../components/ButtonGroup";
 import { useFilterList } from "../../hooks/use-filter-list";
 
 function Library() {
-  const { movies } = useMovieContext();
   const { handleFilterData, currentType } = useFilterList();
-  const { isLoading } = useLoader(movies);
+  const { isLoading } = useLoader();
 
   return (
     <BoxContainer>
@@ -41,7 +39,8 @@ function Library() {
         <InputField />
       </Header>
       {/* display list of movies / shows */}
-      {isLoading ? <Loader /> : <CardsList movies={movies} />}
+
+      {isLoading ? <Loader /> : <CardsList />}
     </BoxContainer>
   );
 }

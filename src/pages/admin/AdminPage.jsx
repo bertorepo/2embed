@@ -13,6 +13,7 @@ import { useMovieContext } from "../../hooks/use-movie-context";
 import Pagination from "../../components/Pagination";
 import { usePaginate } from "../../hooks/use-paginate";
 import { Link } from "react-router-dom";
+import EmptyPage from "../../components/EmptyPage";
 
 function AdminPage() {
   const { movies } = useMovieContext();
@@ -106,15 +107,21 @@ function AdminPage() {
           </CustomButton>
         </Link>
       </Box>
-      <ListTable keyFn={keyFn} data={currentItems} config={config} />
 
-      {/* Pagination */}
-      <Pagination
-        currentPageNumber={currentPageNumber}
-        selectedPage={selectedPage}
-        pageCount={pageCount}
-        handlePageClick={handlePageClick}
-      />
+      {currentItems.length === 0 ? (
+        <EmptyPage />
+      ) : (
+        <>
+          <ListTable keyFn={keyFn} data={currentItems} config={config} />
+
+          <Pagination
+            currentPageNumber={currentPageNumber}
+            selectedPage={selectedPage}
+            pageCount={pageCount}
+            handlePageClick={handlePageClick}
+          />
+        </>
+      )}
     </BoxContainer>
   );
 }
