@@ -1,5 +1,6 @@
 import AddMoviePage from "../pages/admin/AddMoviePage";
 import AdminPage from "../pages/admin/AdminPage";
+import SeasonsPage from "../pages/admin/seasons/SeasonsPage";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Library from "../pages/library/Library";
 import MoviePage from "../pages/movie/MoviePage";
@@ -19,6 +20,7 @@ export const mainRoot = createBrowserRouter(
       <Route path="/library/movie/:imdb" element={<MoviePage />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/admin/add" element={<AddMoviePage />} />
+      <Route path="/admin/season/:imdb" element={<SeasonsPage />} />
       <Route path="*" element={<Dashboard />} />
     </Route>
   )

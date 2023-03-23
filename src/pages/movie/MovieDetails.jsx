@@ -1,10 +1,10 @@
 import { Box, Text, Image } from "@chakra-ui/react";
 
-function MovieDetails({ info }) {
+function MovieDetails({ info, children, ...rest }) {
   const { imdbID, Plot, Genre, Runtime, Title, Poster } = info;
   const plotStr = Plot && Plot.split(".")[0];
   return (
-    <Box display={"flex"} columnGap={6} alignItems={"start"}>
+    <Box {...rest} display={"flex"} columnGap={6} alignItems={"start"}>
       <Image
         w={"150px"}
         objectFit="cover"
@@ -32,6 +32,7 @@ function MovieDetails({ info }) {
         <Text color={"gray.400"} fontSize={"sm"}>
           Genres: {Genre}
         </Text>
+        {children}
       </Box>
     </Box>
   );

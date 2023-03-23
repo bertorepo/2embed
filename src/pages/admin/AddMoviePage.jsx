@@ -5,11 +5,10 @@ import {
   Flex,
   HStack,
   Select,
-  Center,
-  Text,
   useDisclosure,
   ModalBody,
   ModalFooter,
+  Text,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -24,7 +23,7 @@ import useLoader from "../../hooks/use-loader";
 import { capitalizeFirstLetter } from "../../utils/index";
 import CustomModal from "../../components/CustomModal";
 import Iframe from "../../components/Iframe";
-import { useFilterList } from "../../hooks/use-filter-list";
+
 import EmptyPage from "../../components/EmptyPage";
 import Loader from "../../components/Loader";
 
@@ -37,15 +36,28 @@ function AddMoviePage() {
   const [title, setTitle] = useState("");
   const [imdbId, setImdbId] = useState("");
   const { findMovie, listData } = useAdminContext();
-  const { movies, addMovie } = useMovieContext();
-  const { handleFilterData } = useFilterList();
+  const { addMovie, movies, fetchedAllMovies } = useMovieContext();
   const [type, setType] = useState(options[0].value);
   const { isLoading } = useLoader();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    handleFilterData("movie");
-  }, [handleFilterData, movies]);
+    const runEffect = async () => {
+      await fetchedAllMovies();
+    };
+
+    runEffect();
+  }, [fetchedAllMovies]);
+
+  const filteredListData = listData.map((item) => {
+    const checkMovie = movies.findIndex(
+      (movie) => movie.imdbID === item.imdbID
+    );
+    if (checkMovie !== -1) {
+      return { ...item, isAdded: true };
+    }
+    return item;
+  });
 
   const config = [
     {
@@ -63,33 +75,32 @@ function AddMoviePage() {
       render: (item) => (
         <HStack spacing={4}>
           {item.Type === "movie" ? (
-            <CustomButton
-              onClick={() => handlePreviewStream(item)}
-              size="sm"
-              rounded
-              color={
-                handleCheckMovie(item.imdbID) ? "whiteAlpha.400" : "green.300"
-              }
-              isDisabled={handleCheckMovie(item.imdbID)}
-            >
-              Preview Stream
-            </CustomButton>
+            <>
+              <CustomButton
+                onClick={() => handlePreviewStream(item)}
+                size="sm"
+                rounded
+                color={item.isActive ? "blackAlpha.600" : "green.300"}
+                isDisabled={item.isAdded ? true : false}
+                bg={item.isActive && "cyan.600"}
+              >
+                Preview Stream
+              </CustomButton>
+              <CustomButton
+                onClick={() => handleAddMovie(item)}
+                size="sm"
+                bg={item.isActive && "cyan.600"}
+                rounded
+                isDisabled={item.isAdded ? true : false}
+              >
+                {item.isAdded ? "Added Already" : "Add to Server"}
+              </CustomButton>
+            </>
           ) : (
             <CustomButton size="sm" rounded color="green.300">
-              Get Seasons
+              <Link to={`/admin/season/${item.imdbID}`}>Get Seasons</Link>
             </CustomButton>
           )}
-
-          <CustomButton
-            isDisabled={handleCheckMovie(item.imdbID)}
-            onClick={() => handleAddMovie(item)}
-            size="sm"
-            bg={handleCheckMovie(item.imdbID) ? "blackAlpha.400" : "cyan.600"}
-            color={handleCheckMovie(item.imdbID) ? "whiteAlpha.400" : ""}
-            rounded
-          >
-            {handleCheckMovie(item.imdbID) ? "Already Added" : "Add to server"}
-          </CustomButton>
         </HStack>
       ),
     },
@@ -100,11 +111,6 @@ function AddMoviePage() {
   const handlePreviewStream = (item) => {
     onOpen();
     setImdbId(item.imdbID);
-  };
-
-  const handleCheckMovie = (id) => {
-    const result = movies.findIndex((item) => item.imdbID === id);
-    return result !== -1 ? true : false;
   };
 
   const handleAddMovie = async (movie) => {
@@ -122,7 +128,6 @@ function AddMoviePage() {
   }
 
   const handleKeyChange = async (e) => {
-    setTitle(e.target.value);
     if (e.key === "Enter") {
       if (!title.trim()) {
         alert(`Enter valid ${type} title!`);
@@ -227,7 +232,7 @@ function AddMoviePage() {
         {listData.length === 0 ? (
           <EmptyPage message={"Populate Data in the Search Box!"} />
         ) : (
-          <ListTable keyFn={keyFn} data={listData} config={config} />
+          <ListTable keyFn={keyFn} data={filteredListData} config={config} />
         )}
       </Box>
 

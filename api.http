@@ -6,12 +6,12 @@ GET http://www.omdbapi.com/?apikey=9931b7c&s=last
 GET http://www.omdbapi.com/?apikey=9931b7c&i=tt0232500&plot=full
 
 ### GET Evry Season
-GET http://www.omdbapi.com/?apikey=9931b7c&i=tt1475582&type=episode&plot=full
+GET http://www.omdbapi.com/?apikey=9931b7c&i=tt1475582&type=episode&plot=short
 
 
 
 ### GET All episodes by Season
-GET http://www.omdbapi.com/?apikey=9931b7c&i=tt0944947&Season=1
+GET http://www.omdbapi.com/?apikey=9931b7c&i=tt0944947&Season
 
 ###
 POST https://json-server-in.vercel.app/api/posts

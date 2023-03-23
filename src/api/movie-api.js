@@ -21,6 +21,18 @@ export const filterDataByType = async (type) => {
   return response.data.filter((resp) => resp.Type === type);
 };
 
+// get movie in the server
+
+export const checkIfExisted = async (imdb) => {
+  const response = await getAllMovies();
+
+  const filterResult = await response.data.filter(
+    (item) => item.imdbID === imdb
+  );
+
+  return filterResult.length !== 0 ? true : false;
+};
+
 export const getMovieDetailsById = async (imdbId) => {
   const response = await axios.get(`${OMDB_URL}/`, {
     headers: {
@@ -55,13 +67,29 @@ export const searchMovie = async (title, type = "movie") => {
 export const addMovieToServer = async (movie) => {
   const results = await axios.post(
     `${MAIN_URL}/movies`,
-    { ...movie },
+    { ...movie, isActive: true },
     {
       headers: {
         "Content-Type": "application/json",
       },
     }
   );
+
+  return results;
+};
+
+export const getSeries = async (imdb) => {
+  const results = await axios.get(`${OMDB_URL}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      apikey: API_KEY,
+      i: imdb,
+      type: "series",
+      plot: "short",
+    },
+  });
 
   return results;
 };

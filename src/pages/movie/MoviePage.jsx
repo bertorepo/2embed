@@ -9,6 +9,7 @@ import useLoader from "../../hooks/use-loader";
 import Loader from "../../components/Loader";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import { useEffect, useMemo, useState } from "react";
+import GoBack from "../../components/GoBack";
 
 function MoviePage() {
   const { isLoading } = useLoader();
@@ -39,22 +40,7 @@ function MoviePage() {
 
   return (
     <BoxContainer mt={12}>
-      <Box
-        display={"flex"}
-        justifyItems="start"
-        columnGap={2}
-        cursor={"pointer"}
-        maxW={"5xl"}
-        mx="auto"
-        _hover={{
-          color: "cyan.500",
-        }}
-      >
-        <ChevronLeftIcon h={6} w={6} />
-        <Link to="/library">
-          <Text>Go Back to Library</Text>
-        </Link>
-      </Box>
+      <GoBack mx="auto" path="/library" location="Library" />
       <Box
         mt={{ md: 4, lg: 8, sm: 4 }}
         display={"flex"}
