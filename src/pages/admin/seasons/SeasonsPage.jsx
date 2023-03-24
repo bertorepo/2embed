@@ -12,8 +12,14 @@ import SeasonsTable from "./SeasonsTable";
 
 import { Box, Select } from "@chakra-ui/react";
 function SeasonsPage() {
-  const { fetchSeries, addMovie, checkMovieById, isDisabled } =
-    useMovieContext();
+  const {
+    fetchSeries,
+    addMovie,
+    checkMovieById,
+    isDisabled,
+    fetchAllEpisodes,
+    currentEpisodes,
+  } = useMovieContext();
 
   const [series, setSeries] = useState({});
   const [seasons, setSeasons] = useState([]);
@@ -39,6 +45,14 @@ function SeasonsPage() {
     runEffect();
   }, [fetchSeries, imdb, checkMovieById]);
 
+  useEffect(() => {
+    const runEffect = async () => {
+      await fetchAllEpisodes(imdb, currentSeason);
+    };
+
+    runEffect();
+  }, [currentSeason, fetchAllEpisodes, imdb]);
+
   const handleAddSeriesClick = async () => {
     await addMovie(series);
     alert("added");
@@ -62,7 +76,7 @@ function SeasonsPage() {
         pageHeading="Series / Seasons"
         pageSubHeading="Get Episodes and Seasons"
       />
-      <GoBack path="/admin/add" location="Admin" />
+      <GoBack mt={10} path="/admin/add" location="Admin" />
       <MovieDetails w={"4xl"} mt={5} info={series}>
         <CustomButton
           w={"sm"}
@@ -89,7 +103,7 @@ function SeasonsPage() {
         </Select>
       </Box>
 
-      <SeasonsTable series={series} />
+      <SeasonsTable episodes={currentEpisodes} />
     </BoxContainer>
   );
 }

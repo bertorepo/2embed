@@ -5,6 +5,7 @@ import {
   addMovieToServer,
   getSeries,
   checkIfExisted,
+  getAllEpisodesByImdb,
 } from "../api/movie-api";
 
 const { createContext, useState, useCallback, useMemo } = require("react");
@@ -14,6 +15,7 @@ const MoviesContext = createContext();
 function MoviesContextProvider({ children }) {
   const [movies, setMovies] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [currentEpisodes, setCurrentEpisodes] = useState([]);
 
   // get all movies
   const fetchedAllMovies = useCallback(async () => {
@@ -57,6 +59,12 @@ function MoviesContextProvider({ children }) {
     setIsDisabled(result);
   }, []);
 
+  const fetchAllEpisodes = useCallback(async (imdb, currentSeason) => {
+    const results = await getAllEpisodesByImdb(imdb, currentSeason);
+    console.log(results);
+    setCurrentEpisodes(results.data.Episodes);
+  }, []);
+
   const config = {
     movies,
     fetchedAllMovies,
@@ -66,6 +74,8 @@ function MoviesContextProvider({ children }) {
     fetchSeries,
     checkMovieById,
     isDisabled,
+    fetchAllEpisodes,
+    currentEpisodes,
   };
 
   return (

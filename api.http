@@ -11,7 +11,7 @@ GET http://www.omdbapi.com/?apikey=9931b7c&i=tt1475582&type=episode&plot=short
 
 
 ### GET All episodes by Season
-GET http://www.omdbapi.com/?apikey=9931b7c&i=tt0944947&Season
+GET http://www.omdbapi.com/?apikey=9931b7c&i=tt0944947&Season=1
 
 ###
 POST https://json-server-in.vercel.app/api/posts

@@ -65,15 +65,11 @@ export const searchMovie = async (title, type = "movie") => {
 };
 
 export const addMovieToServer = async (movie) => {
-  const results = await axios.post(
-    `${MAIN_URL}/movies`,
-    { ...movie, isActive: true },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const results = await axios.post(`${MAIN_URL}/movies`, movie, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   return results;
 };
@@ -92,4 +88,19 @@ export const getSeries = async (imdb) => {
   });
 
   return results;
+};
+
+export const getAllEpisodesByImdb = async (imdb, currentSeason) => {
+  const response = await axios.get(`${OMDB_URL}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params: {
+      apikey: API_KEY,
+      i: imdb,
+      Season: currentSeason,
+    },
+  });
+
+  return response;
 };
