@@ -1,4 +1,14 @@
-import { Box, Flex, Icon, HStack } from "@chakra-ui/react";
+import { useState } from "react";
+
+import {
+  Box,
+  Flex,
+  Icon,
+  HStack,
+  useDisclosure,
+  ModalBody,
+  ModalFooter,
+} from "@chakra-ui/react";
 import { StarIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import CustomButton from "../../../components/CustomButton";
 import ListTable from "../components/ListTable";
@@ -6,6 +16,8 @@ import { usePaginate } from "../../../hooks/use-paginate";
 import Pagination from "../../../components/Pagination";
 import { useMovieContext } from "../../../hooks/use-movie-context";
 import { useEffect } from "react";
+import CustomModal from "../../../components/CustomModal";
+import Iframe from "../../../components/Iframe";
 
 function SeasonsTable({ episodes, currentSeason, imdb }) {
   const {
@@ -17,6 +29,8 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
     setCurrentPageNumber,
   } = usePaginate(episodes);
   const { fetchAllSeasons, seasonsList, appendEpisode } = useMovieContext();
+  const [currentEpisode, setCurrentEpisode] = useState(1);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     const runEffect = async () => {
@@ -44,7 +58,12 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
       label: "Actions",
       render: (episode) => (
         <HStack spacing={4}>
-          <CustomButton size={"sm"} rounded color="green.300">
+          <CustomButton
+            onClick={() => handlePreviewEpisodeClick(episode.Episode)}
+            size={"sm"}
+            rounded
+            color="green.300"
+          >
             Preview
           </CustomButton>
           <CustomButton
@@ -104,6 +123,13 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
     await fetchAllSeasons();
     alert("Added successfully!");
   };
+
+  const handlePreviewEpisodeClick = (currentEpisode) => {
+    if (currentEpisode) {
+      onOpen();
+      setCurrentEpisode(Number(currentEpisode));
+    }
+  };
   /* ====================================== */
 
   return (
@@ -119,6 +145,27 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
         handlePageClick={handlePageClick}
         selectedPage={selectedPage}
       />
+
+      <CustomModal
+        size={{ md: "md", lg: "6xl", sm: "sm" }}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalBody pb={6}>
+          <Box height={{ lg: "4xl" }}>
+            <Iframe
+              src={imdb}
+              episode={currentEpisode}
+              season={currentSeason}
+            />
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <CustomButton onClick={onClose} rounded bg="cyan.600">
+            Close
+          </CustomButton>
+        </ModalFooter>
+      </CustomModal>
     </Box>
   );
 }

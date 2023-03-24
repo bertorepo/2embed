@@ -116,7 +116,7 @@ function AddMoviePage() {
   const handleAddMovie = async (movie) => {
     if (movie) {
       await addMovie(movie);
-
+      await fetchedAllMovies();
       alert("added");
     }
   };
