@@ -104,3 +104,74 @@ export const getAllEpisodesByImdb = async (imdb, currentSeason) => {
 
   return response;
 };
+
+export const getAllSeasons = async () => {
+  const results = await axios.get(`${MAIN_URL}/seasons`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return results;
+};
+
+export const checkExistingEpisode = async (
+  seasonNumber,
+  imdb,
+  episodeImdbId
+) => {
+  const response = await getAllSeasons();
+  const existingSeason = response.data.find(
+    (currentSeason) =>
+      currentSeason.imdbID === imdb && currentSeason.season === seasonNumber
+  );
+
+  const existingEpisode = existingSeason.episodes.filter(
+    (eps) => eps.imdbID === episodeImdbId
+  );
+
+  return existingEpisode.length !== 0 ? true : false;
+};
+
+export const addEpisode = async (episodeObj) => {
+  const response = await getAllSeasons();
+  const { imdbID, season, episodes } = episodeObj;
+
+  const existingSeason = response.data.find(
+    (currentSeason) =>
+      currentSeason.season === season && currentSeason.imdbID === imdbID
+  );
+
+  let createEpisode = {
+    imdbID: "",
+    season: "",
+    episodes: [],
+  };
+
+  // check if there is result
+  if (!existingSeason) {
+    createEpisode = {
+      imdbID: imdbID,
+      season: season,
+      episodes: [{ ...episodes }],
+    };
+
+    await axios.post(`${MAIN_URL}/seasons`, createEpisode, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } else {
+    createEpisode = {
+      imdbID: existingSeason.imdbID,
+      season: existingSeason.season,
+      episodes: [...existingSeason.episodes, { ...episodes }],
+    };
+
+    axios.patch(`${MAIN_URL}/seasons/${existingSeason.id}`, createEpisode, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+};

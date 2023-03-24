@@ -103,7 +103,11 @@ function SeasonsPage() {
         </Select>
       </Box>
 
-      <SeasonsTable episodes={currentEpisodes} />
+      <SeasonsTable
+        currentSeason={currentSeason}
+        imdb={imdb}
+        episodes={currentEpisodes}
+      />
     </BoxContainer>
   );
 }
