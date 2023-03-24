@@ -20,6 +20,7 @@ import CustomModal from "../../../components/CustomModal";
 import Iframe from "../../../components/Iframe";
 
 function SeasonsTable({ episodes, currentSeason, imdb }) {
+  const { fetchAllSeasons, seasonsList, appendEpisode } = useMovieContext();
   const {
     currentItems,
     pageCount,
@@ -28,7 +29,6 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
     setSelectedPage,
     setCurrentPageNumber,
   } = usePaginate(episodes);
-  const { fetchAllSeasons, seasonsList, appendEpisode } = useMovieContext();
   const [currentEpisode, setCurrentEpisode] = useState(1);
   const { isOpen, onClose, onOpen } = useDisclosure();
 

@@ -1,5 +1,5 @@
 import BoxContainer from "../../layout/BoxContainer";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Iframe from "../../components/Iframe";
 import MovieDetails from "./MovieDetails";
@@ -10,14 +10,20 @@ import Loader from "../../components/Loader";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import { useEffect, useMemo, useState } from "react";
 import GoBack from "../../components/GoBack";
+import SelectSeasonEpisode from "./SelectSeasonEpisode";
 
 function MoviePage() {
   const { isLoading } = useLoader();
   const [details, setDetails] = useState({});
+  const [allSeasons, setAllSeasons] = useState([]);
   const { imdb } = useParams();
   const navigate = useNavigate();
 
-  const { fetchDetails } = useMovieContext();
+  const [currentSeason, setCurrentSeason] = useState(1);
+  const [currentEpisodeImdb, setCurrentEpisodeImdb] = useState("");
+  const [currentEpisodeNumber, setCurrentEpisodeNumber] = useState(0);
+
+  const { fetchDetails, fetchAllSeasons, seasonsList } = useMovieContext();
 
   useMemo(() => {
     const runEffect = async () => {
@@ -33,6 +39,54 @@ function MoviePage() {
       runEffect();
     }
   }, [imdb, fetchDetails, navigate]);
+
+  useEffect(() => {
+    const runEffect = async () => {
+      await fetchAllSeasons();
+    };
+
+    runEffect();
+  }, [fetchAllSeasons]);
+
+  useEffect(() => {
+    const filterSeasonsByImdb = () => {
+      const existingSeason =
+        seasonsList && seasonsList.filter((sn) => sn.imdbID === imdb);
+
+      const sortedSeasons = existingSeason.sort((a, b) => {
+        const valueA = Number(a.season);
+        const valueB = Number(b.season);
+
+        return valueA - valueB;
+      });
+
+      // get the first episode in current season
+      const currentPlaying = sortedSeasons.find(
+        (sn) => sn.season === String(currentSeason)
+      );
+
+      const firstEpisode = currentPlaying && currentPlaying.episodes[0].imdbID;
+      const episodeNumer = currentPlaying && currentPlaying.episodes[0].Episode;
+
+      setAllSeasons(sortedSeasons);
+      setCurrentEpisodeImdb(firstEpisode);
+      setCurrentEpisodeNumber(Number(episodeNumer));
+    };
+
+    filterSeasonsByImdb();
+  }, [imdb, seasonsList]);
+
+  console.log(imdb, currentEpisodeNumber, currentEpisodeImdb);
+
+  const handleChangeSeason = (seasonNumber) => {
+    setCurrentSeason(seasonNumber);
+    setCurrentEpisodeNumber(1);
+  };
+
+  const handleChangeEpisode = (episodeNumber, imdbID) => {
+    setCurrentEpisodeImdb(imdbID);
+    setCurrentEpisodeNumber(Number(episodeNumber));
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -51,15 +105,39 @@ function MoviePage() {
         mx="auto"
       >
         <Box rounded={"lg"} width={"full"} height={{ sm: "sm", md: "lg" }}>
-          <Iframe src={imdb} />
+          {details.Type === "movie" ? (
+            <Iframe src={imdb} />
+          ) : (
+            <Iframe
+              src={imdb}
+              episode={currentEpisodeNumber}
+              season={currentSeason}
+            />
+          )}
         </Box>
         <Box
           boxShadow={"2xl"}
           rounded={"lg"}
           bg="blackAlpha.400"
           width={"full"}
-          p={12}
+          px={12}
+          py={6}
         >
+          {/* =========================== */}
+
+          {details.Type === "series" && (
+            <SelectSeasonEpisode
+              allSeasons={allSeasons}
+              mb={5}
+              imdb={imdb}
+              onChangeEpisodeImdb={handleChangeEpisode}
+              onChangeSeason={handleChangeSeason}
+              currentSeason={currentSeason}
+              currentEpisode={currentEpisodeImdb}
+            />
+          )}
+
+          {/* =========================== */}
           <MovieDetails info={details} />
         </Box>
       </Box>
