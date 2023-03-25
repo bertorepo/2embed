@@ -20,8 +20,7 @@ function MoviePage() {
   const navigate = useNavigate();
 
   const [currentSeason, setCurrentSeason] = useState(1);
-  const [currentEpisodeImdb, setCurrentEpisodeImdb] = useState("");
-  const [currentEpisodeNumber, setCurrentEpisodeNumber] = useState(0);
+  const [currentEpisodeNumber, setCurrentEpisodeNumber] = useState(1);
 
   const { fetchDetails, fetchAllSeasons, seasonsList } = useMovieContext();
 
@@ -60,31 +59,18 @@ function MoviePage() {
         return valueA - valueB;
       });
 
-      // get the first episode in current season
-      const currentPlaying = sortedSeasons.find(
-        (sn) => sn.season === String(currentSeason)
-      );
-
-      const firstEpisode = currentPlaying && currentPlaying.episodes[0].imdbID;
-      const episodeNumer = currentPlaying && currentPlaying.episodes[0].Episode;
-
       setAllSeasons(sortedSeasons);
-      setCurrentEpisodeImdb(firstEpisode);
-      setCurrentEpisodeNumber(Number(episodeNumer));
     };
 
     filterSeasonsByImdb();
   }, [imdb, seasonsList]);
-
-  console.log(imdb, currentEpisodeNumber, currentEpisodeImdb);
 
   const handleChangeSeason = (seasonNumber) => {
     setCurrentSeason(seasonNumber);
     setCurrentEpisodeNumber(1);
   };
 
-  const handleChangeEpisode = (episodeNumber, imdbID) => {
-    setCurrentEpisodeImdb(imdbID);
+  const handleChangeEpisode = (episodeNumber) => {
     setCurrentEpisodeNumber(Number(episodeNumber));
   };
 
@@ -130,10 +116,10 @@ function MoviePage() {
               allSeasons={allSeasons}
               mb={5}
               imdb={imdb}
-              onChangeEpisodeImdb={handleChangeEpisode}
+              onChangeEpisodeNumber={handleChangeEpisode}
               onChangeSeason={handleChangeSeason}
               currentSeason={currentSeason}
-              currentEpisode={currentEpisodeImdb}
+              currentEpisode={currentEpisodeNumber}
             />
           )}
 

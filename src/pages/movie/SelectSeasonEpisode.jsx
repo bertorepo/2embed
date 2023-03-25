@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Select, HStack } from "@chakra-ui/react";
-import { useMovieContext } from "../../hooks/use-movie-context";
 
 function SelectSeasonEpisode({
   imdb,
   allSeasons,
   onChangeSeason,
-  onChangeEpisodeImdb,
+  onChangeEpisodeNumber,
   currentEpisode,
   currentSeason,
   ...rest
@@ -34,15 +33,14 @@ function SelectSeasonEpisode({
 
   const renderedEpisodeOptions = allEpisodes.map((ep) => {
     return (
-      <option key={ep.Episode} value={ep.imdbID}>
+      <option key={ep.Episode} value={ep.Episode}>
         {ep.Title}
       </option>
     );
   });
 
-  const handleChangeEpisode = (imdb) => {
-    const currentEpisodeByImdb = allEpisodes.find((eps) => eps.imdbID === imdb);
-    onChangeEpisodeImdb(currentEpisodeByImdb.Episode, imdb);
+  const handleChangeEpisode = (currentEpisodeNumber) => {
+    onChangeEpisodeNumber(currentEpisodeNumber);
   };
 
   return (
