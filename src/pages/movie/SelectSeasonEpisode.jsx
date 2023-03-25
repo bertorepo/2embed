@@ -37,7 +37,7 @@ function SelectSeasonEpisode({
   const renderedEpisodeOptions = allEpisodes.map((ep) => {
     return (
       <option key={ep.Episode} value={ep.Episode}>
-        {ep.Title}
+        (Episode {ep.Episode}:) {ep.Title}
       </option>
     );
   });

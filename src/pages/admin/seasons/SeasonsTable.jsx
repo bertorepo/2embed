@@ -56,27 +56,31 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
     },
     {
       label: "Actions",
-      render: (episode) => (
-        <HStack spacing={4}>
-          <CustomButton
-            onClick={() => handlePreviewEpisodeClick(episode.Episode)}
-            size={"sm"}
-            rounded
-            color="green.300"
-          >
-            Preview
-          </CustomButton>
-          <CustomButton
-            onClick={() => handleAddEpisodeClick(episode)}
-            size={"sm"}
-            rounded
-            bg="cyan.600"
-            isDisabled={episode.isAdded}
-          >
-            {episode.isAdded ? "Added!" : "Add Episode"}
-          </CustomButton>
-        </HStack>
-      ),
+      render: (episode) => {
+        const isAddedAlready = episode.isAdded;
+
+        return (
+          <HStack spacing={4}>
+            <CustomButton
+              onClick={() => handlePreviewEpisodeClick(episode.Episode)}
+              size={"sm"}
+              rounded
+              color="green.300"
+            >
+              Preview
+            </CustomButton>
+            <CustomButton
+              onClick={() => handleAddEpisodeClick(episode)}
+              size={"sm"}
+              rounded
+              bg={isAddedAlready ? "blackAlpha.600" : "cyan.600"}
+              isDisabled={isAddedAlready}
+            >
+              {isAddedAlready ? "Added!" : "Add Episode"}
+            </CustomButton>
+          </HStack>
+        );
+      },
     },
     {
       label: "Update/Delete",

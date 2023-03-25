@@ -193,7 +193,7 @@ export const AddAllEpisodesBySeason = async (
       episodes: allEpisodes,
     };
 
-    await addToServer(createEpisodes, "patch", seasonNumber);
+    await addToServer(createEpisodes, "patch", existingSeason.id);
   }
 };
 

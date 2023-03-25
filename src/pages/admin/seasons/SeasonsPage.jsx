@@ -113,12 +113,12 @@ function SeasonsPage() {
     );
   });
 
+  const disabledAddAllButton =
+    filteredAddedEpisode.length === addedEpisodesRef.current;
+
   if (isLoading) {
     return <Loader />;
   }
-
-  const disabledAddAllButton =
-    filteredAddedEpisode.length === addedEpisodesRef.current;
 
   return (
     <BoxContainer p={4}>
