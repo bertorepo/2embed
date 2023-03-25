@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import CustomButton from "../../../components/CustomButton";
 import Header from "../../../components/Header";
@@ -30,6 +30,8 @@ function SeasonsPage() {
   const { imdb } = useParams();
   const { isLoading } = useLoader();
 
+  const addedEpisodesRef = useRef(0);
+
   useEffect(() => {
     const runEffect = async () => {
       const result = await fetchSeries(imdb);
@@ -54,6 +56,7 @@ function SeasonsPage() {
     };
 
     runEffect();
+    addedEpisodesRef.current = 0;
   }, [currentSeason, fetchAllEpisodes, imdb]);
 
   useEffect(() => {
@@ -79,6 +82,10 @@ function SeasonsPage() {
         seasonsList.find(
           (sn) => sn.imdbID === imdb && sn.season === String(currentSeason)
         );
+
+      if (existingSeason) {
+        addedEpisodesRef.current = existingSeason.episodes.length;
+      }
 
       const existingEpisode =
         existingSeason &&
@@ -109,6 +116,9 @@ function SeasonsPage() {
   if (isLoading) {
     return <Loader />;
   }
+
+  const disabledAddAllButton =
+    filteredAddedEpisode.length === addedEpisodesRef.current;
 
   return (
     <BoxContainer p={4}>
@@ -144,10 +154,13 @@ function SeasonsPage() {
         </Select>
         <CustomButton
           onClick={handleAddAllEpisodesBySeason}
-          bg="cyan.600"
           rounded
+          isDisabled={disabledAddAllButton}
+          bg={disabledAddAllButton ? "blackAlpha.500" : "cyan.600"}
         >
-          Add All Season {currentSeason}
+          {disabledAddAllButton
+            ? "All Added"
+            : `Add All Season ${currentSeason}`}
         </CustomButton>
       </Box>
 
