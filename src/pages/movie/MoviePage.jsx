@@ -11,6 +11,7 @@ import { useMovieContext } from "../../hooks/use-movie-context";
 import { useEffect, useMemo, useState } from "react";
 import GoBack from "../../components/GoBack";
 import SelectSeasonEpisode from "./SelectSeasonEpisode";
+import EmptyPage from "../../components/EmptyPage";
 
 function MoviePage() {
   const { isLoading } = useLoader();
@@ -76,6 +77,10 @@ function MoviePage() {
 
   if (isLoading) {
     return <Loader />;
+  }
+
+  if (allSeasons.length === 0 && details.Type === "series") {
+    return <EmptyPage message="No Seasons and Episodes Available" />;
   }
 
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Select, HStack } from "@chakra-ui/react";
+import { Select, HStack, Text } from "@chakra-ui/react";
 
 function SelectSeasonEpisode({
   imdb,
@@ -17,8 +17,11 @@ function SelectSeasonEpisode({
       allSeasons &&
       allSeasons.find((sn) => sn.season === String(currentSeason));
 
-    const { episodes } = selectedSeason;
-    setAllEpisodes(episodes);
+    if (!selectedSeason) {
+      return;
+    } else {
+      setAllEpisodes(selectedSeason.episodes);
+    }
   }, [currentSeason, allSeasons]);
 
   const renderSeasonOptions =
