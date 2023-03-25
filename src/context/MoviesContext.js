@@ -8,6 +8,7 @@ import {
   getAllEpisodesByImdb,
   addEpisode,
   getAllSeasons,
+  AddAllEpisodesBySeason,
 } from "../api/movie-api";
 
 const { createContext, useState, useCallback, useMemo } = require("react");
@@ -75,6 +76,13 @@ function MoviesContextProvider({ children }) {
   const appendEpisode = useCallback(async (currentEpisode) => {
     await addEpisode(currentEpisode);
   }, []);
+
+  const addAllEpisodes = useCallback(
+    async (allEpisodes, seasonNumber, imdbId) => {
+      await AddAllEpisodesBySeason(allEpisodes, seasonNumber, imdbId);
+    },
+    []
+  );
   const config = {
     movies,
     fetchedAllMovies,
@@ -89,6 +97,7 @@ function MoviesContextProvider({ children }) {
     appendEpisode,
     fetchAllSeasons,
     seasonsList,
+    addAllEpisodes,
   };
 
   return (

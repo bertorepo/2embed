@@ -20,7 +20,7 @@ import CustomModal from "../../../components/CustomModal";
 import Iframe from "../../../components/Iframe";
 
 function SeasonsTable({ episodes, currentSeason, imdb }) {
-  const { fetchAllSeasons, seasonsList, appendEpisode } = useMovieContext();
+  const { fetchAllSeasons, appendEpisode } = useMovieContext();
   const {
     currentItems,
     pageCount,
@@ -93,26 +93,6 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
 
   /* =============  EPISODE=========== */
 
-  const filteredAddedEpisode =
-    currentItems &&
-    currentItems.map((episode) => {
-      const existingSeason =
-        seasonsList &&
-        seasonsList.find(
-          (sn) => sn.imdbID === imdb && sn.season === String(currentSeason)
-        );
-
-      const existingEpisode =
-        existingSeason &&
-        existingSeason.episodes.filter((eps) => eps.imdbID === episode.imdbID);
-
-      if (existingEpisode && existingEpisode.length !== 0) {
-        return { ...episode, isAdded: true };
-      }
-
-      return episode;
-    });
-
   const handleAddEpisodeClick = async (episode) => {
     const episodeObj = {
       imdbID: imdb,
@@ -134,11 +114,7 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
 
   return (
     <Box mt={5}>
-      <ListTable
-        data={filteredAddedEpisode}
-        keyFn={keyFn}
-        config={episodeConfig}
-      />
+      <ListTable data={currentItems} keyFn={keyFn} config={episodeConfig} />
       {/* pagination */}
       <Pagination
         pageCount={pageCount}

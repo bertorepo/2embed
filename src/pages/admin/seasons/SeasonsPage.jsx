@@ -19,6 +19,9 @@ function SeasonsPage() {
     isDisabled,
     fetchAllEpisodes,
     currentEpisodes,
+    addAllEpisodes,
+    fetchAllSeasons,
+    seasonsList,
   } = useMovieContext();
 
   const [series, setSeries] = useState({});
@@ -53,9 +56,46 @@ function SeasonsPage() {
     runEffect();
   }, [currentSeason, fetchAllEpisodes, imdb]);
 
+  useEffect(() => {
+    const runEffect = async () => {
+      await fetchAllSeasons();
+    };
+
+    runEffect();
+  }, [fetchAllSeasons]);
+
   const handleAddSeriesClick = async () => {
     await addMovie(series);
     alert("added");
+  };
+
+  // filtered added already
+
+  const filteredAddedEpisode =
+    currentEpisodes &&
+    currentEpisodes.map((episode) => {
+      const existingSeason =
+        seasonsList &&
+        seasonsList.find(
+          (sn) => sn.imdbID === imdb && sn.season === String(currentSeason)
+        );
+
+      const existingEpisode =
+        existingSeason &&
+        existingSeason.episodes.filter((eps) => eps.imdbID === episode.imdbID);
+
+      if (existingEpisode && existingEpisode.length !== 0) {
+        return { ...episode, isAdded: true };
+      }
+
+      return episode;
+    });
+
+  // add all episodes per season
+  const handleAddAllEpisodesBySeason = async () => {
+    await addAllEpisodes(currentEpisodes, String(currentSeason), imdb);
+    await fetchAllSeasons();
+    alert(`Added all episodes for Season ${currentSeason}!`);
   };
 
   const renderSeasonsOption = seasons.map((item, index) => {
@@ -90,8 +130,9 @@ function SeasonsPage() {
         </CustomButton>
       </MovieDetails>
 
-      <Box mt={10}>
+      <Box mt={10} display="flex" alignItems="center" columnGap={"12px"}>
         <Select
+          rounded={"full"}
           color="white"
           w={"150px"}
           borderColor="cyan.400"
@@ -101,12 +142,19 @@ function SeasonsPage() {
         >
           {renderSeasonsOption}
         </Select>
+        <CustomButton
+          onClick={handleAddAllEpisodesBySeason}
+          bg="cyan.600"
+          rounded
+        >
+          Add All Season {currentSeason}
+        </CustomButton>
       </Box>
 
       <SeasonsTable
         currentSeason={currentSeason}
         imdb={imdb}
-        episodes={currentEpisodes}
+        episodes={filteredAddedEpisode}
       />
     </BoxContainer>
   );

@@ -121,10 +121,8 @@ export const checkExistingEpisode = async (
   episodeImdbId
 ) => {
   const response = await getAllSeasons();
-  const existingSeason = response.data.find(
-    (currentSeason) =>
-      currentSeason.imdbID === imdb && currentSeason.season === seasonNumber
-  );
+
+  const existingSeason = findExistingSeason(response, seasonNumber, imdb);
 
   const existingEpisode = existingSeason.episodes.filter(
     (eps) => eps.imdbID === episodeImdbId
@@ -137,16 +135,13 @@ export const addEpisode = async (episodeObj) => {
   const response = await getAllSeasons();
   const { imdbID, season, episodes } = episodeObj;
 
-  const existingSeason = response.data.find(
-    (currentSeason) =>
-      currentSeason.season === season && currentSeason.imdbID === imdbID
-  );
-
   let createEpisode = {
     imdbID: "",
     season: "",
     episodes: [],
   };
+
+  const existingSeason = findExistingSeason(response, season, imdbID);
 
   // check if there is result
   if (!existingSeason) {
@@ -156,11 +151,7 @@ export const addEpisode = async (episodeObj) => {
       episodes: [{ ...episodes }],
     };
 
-    await axios.post(`${MAIN_URL}/seasons`, createEpisode, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await addToServer(createEpisode, "post");
   } else {
     createEpisode = {
       imdbID: existingSeason.imdbID,
@@ -168,7 +159,64 @@ export const addEpisode = async (episodeObj) => {
       episodes: [...existingSeason.episodes, { ...episodes }],
     };
 
-    axios.patch(`${MAIN_URL}/seasons/${existingSeason.id}`, createEpisode, {
+    await addToServer(createEpisode, "patch", existingSeason.id);
+  }
+};
+
+// add all episodes by season
+export const AddAllEpisodesBySeason = async (
+  allEpisodes,
+  seasonNumber,
+  imdb
+) => {
+  const response = await getAllSeasons();
+  const existingSeason = findExistingSeason(response, seasonNumber, imdb);
+
+  let createEpisodes = {
+    imdbID: "",
+    season: "",
+    episodes: [],
+  };
+
+  if (!existingSeason) {
+    createEpisodes = {
+      imdbID: imdb,
+      season: seasonNumber,
+      episodes: allEpisodes,
+    };
+
+    await addToServer(createEpisodes, "post");
+  } else {
+    createEpisodes = {
+      imdbID: imdb,
+      season: seasonNumber,
+      episodes: allEpisodes,
+    };
+
+    await addToServer(createEpisodes, "patch", seasonNumber);
+  }
+};
+
+// helper function
+
+const findExistingSeason = (response, seasonNumber, imdbID) => {
+  const existingSeason = response.data.find(
+    (currentSeason) =>
+      currentSeason.season === seasonNumber && currentSeason.imdbID === imdbID
+  );
+
+  return existingSeason;
+};
+
+const addToServer = async (episodes, type = "post", seasonNumber = null) => {
+  if (type === "post") {
+    await axios.post(`${MAIN_URL}/seasons`, episodes, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } else {
+    await axios.patch(`${MAIN_URL}/seasons/${seasonNumber}`, episodes, {
       headers: {
         "Content-Type": "application/json",
       },
