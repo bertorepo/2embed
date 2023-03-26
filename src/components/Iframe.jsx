@@ -13,6 +13,8 @@ function Iframe({ src, episode, season }) {
         src={renderedEmbed}
         width="100%"
         height="100%"
+        allow="fullscreen"
+        allowFullScreen
       ></iframe>
     </>
   );
