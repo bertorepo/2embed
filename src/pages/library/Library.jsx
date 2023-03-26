@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
 import Loader from "../../components/Loader";
@@ -10,12 +11,13 @@ import { useFilterList } from "../../hooks/use-filter-list";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import { usePaginate } from "../../hooks/use-paginate";
 import Pagination from "../../components/Pagination";
-import { useEffect } from "react";
+import { useSearchTitle } from "../../hooks/use-search-title";
 
 function Library() {
   const { handleFilterData, currentType } = useFilterList();
   const { isLoading } = useLoader();
   const { movies } = useMovieContext();
+
   const {
     currentItems,
     pageCount,
@@ -24,6 +26,8 @@ function Library() {
     handlePageClick,
     setCurrentPageNumber,
   } = usePaginate(movies, 20);
+
+  const { handleSearch, handleOnChangeTitle, searchTitle } = useSearchTitle();
 
   useEffect(() => {
     setCurrentPageNumber(0);
@@ -54,7 +58,13 @@ function Library() {
         </ButtonGroup>
 
         {/* search */}
-        <InputField />
+        <InputField
+          type="text"
+          value={searchTitle}
+          onChange={(e) => handleOnChangeTitle(e)}
+          onKeyDown={(e) => handleSearch(e, currentType)}
+          placeholder={`Search ${currentType}`}
+        />
       </Header>
       {/* display list of movies / shows */}
 

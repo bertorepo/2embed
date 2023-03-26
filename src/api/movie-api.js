@@ -214,6 +214,17 @@ export const deleteMovieOrEpisodeById = async (id, type = "movie", imdbId) => {
   }
 };
 
+// search movie or series
+export const searchMovieOrEpisode = async (searchTitle, type) => {
+  const response = await getAllMovies();
+  const searchResults = response.data.filter((result) => {
+    const loweredCaseTitle = result.Title.toLowerCase();
+    return loweredCaseTitle.indexOf(searchTitle) !== -1 && result.Type === type;
+  });
+
+  return searchResults;
+};
+
 // helper function
 
 const deleteByEpisodeId = async (id) => {

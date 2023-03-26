@@ -129,26 +129,22 @@ function AddMoviePage() {
 
   const handleKeyChange = async (e) => {
     if (e.key === "Enter") {
-      if (!title.trim()) {
-        alert(`Enter valid ${type} title!`);
-        return;
-      }
-
-      const response = await findMovie(title, type);
-      if (response) {
-        alert(response);
-      }
-      setTitle("");
+      await findMovieOrSeries(title, type);
     }
   };
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
+    await findMovieOrSeries(title, type);
+  };
+
+  // helpere function
+  const findMovieOrSeries = async (currentTitle, currentType) => {
     if (!title.trim()) {
       alert(`Enter valid ${type} title!`);
       return;
     }
-    const response = await findMovie(title, type);
+    const response = await findMovie(currentTitle, currentType);
     if (response) {
       alert(response);
     }

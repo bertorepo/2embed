@@ -14,11 +14,13 @@ import { Link } from "react-router-dom";
 import EmptyPage from "../../components/EmptyPage";
 import useLoader from "../../hooks/use-loader";
 import Loader from "../../components/Loader";
+import { useSearchTitle } from "../../hooks/use-search-title";
 
 function AdminPage() {
   const { movies, deleteMovieOrEpisode, filterData } = useMovieContext();
   const { currentType, handleFilterData } = useFilterList();
   const { isLoading } = useLoader();
+
   const {
     pageCount,
     handlePageClick,
@@ -28,6 +30,8 @@ function AdminPage() {
     selectedPage,
     setSelectedPage,
   } = usePaginate(movies);
+
+  const { handleSearch, searchTitle, handleOnChangeTitle } = useSearchTitle();
 
   const handleClick = (type) => {
     handleFilterData(type);
@@ -115,7 +119,13 @@ function AdminPage() {
         </ButtonGroup>
 
         {/* use for search */}
-        <InputField />
+        <InputField
+          type="text"
+          value={searchTitle}
+          onChange={(e) => handleOnChangeTitle(e)}
+          onKeyDown={(e) => handleSearch(e, currentType)}
+          placeholder={`Search ${currentType}`}
+        />
       </Header>
 
       {/* table */}

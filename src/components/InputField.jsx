@@ -1,10 +1,10 @@
 import { Input } from "@chakra-ui/react";
 
-function InputField({ ...rest }) {
+function InputField({ placeholder, ...rest }) {
   return (
     <Input
       variant="filled"
-      placeholder="Search"
+      placeholder={placeholder}
       width="sm"
       size="md"
       sx={{
