@@ -20,7 +20,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { NavLink as CustomLink } from "react-router-dom";
+import { NavLink as CustomLink, Link as RouterLink } from "react-router-dom";
 
 import logoImage from "../assets/images/logo.png";
 
@@ -78,20 +78,25 @@ function AppBar() {
             />
 
             <HStack spacing={8} alignItems={"center"}>
-              <Box>
-                <Flex alignItems={"center"} gap={3}>
-                  <Image
-                    boxSize="30px"
-                    objectFit="cover"
-                    objectPosition="center"
-                    src={logoImage}
-                    alt="logo"
-                  />
-                  <Text color={useColorModeValue("", "cyan.600")} fontSize="md">
-                    2Embed
-                  </Text>
-                </Flex>
-              </Box>
+              <RouterLink to="/">
+                <Box cursor={"pointer"}>
+                  <Flex alignItems={"center"} gap={3}>
+                    <Image
+                      boxSize="30px"
+                      objectFit="cover"
+                      objectPosition="center"
+                      src={logoImage}
+                      alt="logo"
+                    />
+                    <Text
+                      color={useColorModeValue("", "cyan.600")}
+                      fontSize="md"
+                    >
+                      2Embed
+                    </Text>
+                  </Flex>
+                </Box>
+              </RouterLink>
 
               {/* navlinks */}
               <HStack
