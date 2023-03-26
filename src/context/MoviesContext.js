@@ -9,6 +9,7 @@ import {
   addEpisode,
   getAllSeasons,
   AddAllEpisodesBySeason,
+  deleteMovieOrEpisodeById,
 } from "../api/movie-api";
 
 const { createContext, useState, useCallback, useMemo } = require("react");
@@ -83,6 +84,11 @@ function MoviesContextProvider({ children }) {
     },
     []
   );
+
+  const deleteMovieOrEpisode = async (id, type, imdbId) => {
+    await deleteMovieOrEpisodeById(id, type, imdbId);
+  };
+
   const config = {
     movies,
     fetchedAllMovies,
@@ -98,6 +104,7 @@ function MoviesContextProvider({ children }) {
     fetchAllSeasons,
     seasonsList,
     addAllEpisodes,
+    deleteMovieOrEpisode,
   };
 
   return (

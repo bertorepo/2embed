@@ -28,7 +28,6 @@ function Library() {
   useEffect(() => {
     setCurrentPageNumber(0);
     setSelectedPage(0);
-    console.log(pageCount);
   }, [movies, setCurrentPageNumber, setSelectedPage]);
 
   return (

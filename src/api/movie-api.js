@@ -197,7 +197,32 @@ export const AddAllEpisodesBySeason = async (
   }
 };
 
+export const deleteMovieOrEpisodeById = async (id, type = "movie", imdbId) => {
+  // delete to the movies array in the server
+  await axios.delete(`${MAIN_URL}/movies/${id}`);
+
+  // if Its a series then lets delete also the episodes
+  if (type === "series") {
+    const response = await getAllSeasons();
+    const filteredSeasons = response.data.filter((sn) => sn.imdbID === imdbId);
+
+    if (filteredSeasons) {
+      filteredSeasons.forEach(async (season) => {
+        await deleteByEpisodeId(season.id);
+      });
+    }
+  }
+};
+
 // helper function
+
+const deleteByEpisodeId = async (id) => {
+  await axios.delete(`${MAIN_URL}/seasons/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};
 
 const findExistingSeason = (response, seasonNumber, imdbID) => {
   const existingSeason = response.data.find(
