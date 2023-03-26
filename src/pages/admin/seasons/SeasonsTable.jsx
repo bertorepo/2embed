@@ -120,11 +120,14 @@ function SeasonsTable({ episodes, currentSeason, imdb }) {
     <Box mt={5}>
       <ListTable data={currentItems} keyFn={keyFn} config={episodeConfig} />
       {/* pagination */}
-      <Pagination
-        pageCount={pageCount}
-        handlePageClick={handlePageClick}
-        selectedPage={selectedPage}
-      />
+
+      {pageCount !== 1 && (
+        <Pagination
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+          selectedPage={selectedPage}
+        />
+      )}
 
       <CustomModal
         size={{ md: "md", lg: "6xl", sm: "sm" }}

@@ -75,12 +75,14 @@ function AdminPage() {
     <>
       <ListTable keyFn={keyFn} data={currentItems} config={config} />
 
-      <Pagination
-        currentPageNumber={currentPageNumber}
-        selectedPage={selectedPage}
-        pageCount={pageCount}
-        handlePageClick={handlePageClick}
-      />
+      {pageCount !== 1 && (
+        <Pagination
+          currentPageNumber={currentPageNumber}
+          selectedPage={selectedPage}
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+        />
+      )}
     </>
   );
 

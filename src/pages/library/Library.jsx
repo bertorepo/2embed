@@ -7,10 +7,29 @@ import CardsList from "./CardsList";
 import Header from "../../components/Header";
 import ButtonGroup from "../../components/ButtonGroup";
 import { useFilterList } from "../../hooks/use-filter-list";
+import { useMovieContext } from "../../hooks/use-movie-context";
+import { usePaginate } from "../../hooks/use-paginate";
+import Pagination from "../../components/Pagination";
+import { useEffect } from "react";
 
 function Library() {
   const { handleFilterData, currentType } = useFilterList();
   const { isLoading } = useLoader();
+  const { movies } = useMovieContext();
+  const {
+    currentItems,
+    pageCount,
+    selectedPage,
+    setSelectedPage,
+    handlePageClick,
+    setCurrentPageNumber,
+  } = usePaginate(movies, 20);
+
+  useEffect(() => {
+    setCurrentPageNumber(0);
+    setSelectedPage(0);
+    console.log(pageCount);
+  }, [movies, setCurrentPageNumber, setSelectedPage]);
 
   return (
     <BoxContainer>
@@ -40,7 +59,15 @@ function Library() {
       </Header>
       {/* display list of movies / shows */}
 
-      {isLoading ? <Loader /> : <CardsList />}
+      {isLoading ? <Loader /> : <CardsList movies={currentItems} />}
+
+      {pageCount !== 1 && (
+        <Pagination
+          pageCount={pageCount}
+          handlePageClick={handlePageClick}
+          selectedPage={selectedPage}
+        />
+      )}
     </BoxContainer>
   );
 }

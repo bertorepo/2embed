@@ -1,12 +1,9 @@
 import React from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import Card from "../../components/Card";
-import { useMovieContext } from "../../hooks/use-movie-context";
 import EmptyPage from "../../components/EmptyPage";
 
-function CardsList() {
-  const { movies } = useMovieContext();
-
+function CardsList({ movies }) {
   const renderedMovies =
     movies &&
     movies.map((movie) => {
