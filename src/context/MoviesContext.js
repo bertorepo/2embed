@@ -13,7 +13,7 @@ import {
   searchMovieOrEpisode,
 } from "../api/movie-api";
 
-const { createContext, useState, useCallback, useMemo } = require("react");
+const { createContext, useState, useCallback } = require("react");
 
 const MoviesContext = createContext();
 

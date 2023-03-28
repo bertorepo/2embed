@@ -26,6 +26,7 @@ import Iframe from "../../components/Iframe";
 
 import EmptyPage from "../../components/EmptyPage";
 import Loader from "../../components/Loader";
+import CustomSelect from "../../components/CustomSelect";
 
 const options = [
   { label: "Movie", value: "movie" },
@@ -188,28 +189,18 @@ function AddMoviePage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               onKeyDown={(e) => handleKeyChange(e)}
+              placeholder={`Search for ${type}`}
               sx={{
                 marginRight: "0",
               }}
             />
 
             <HStack mt={{ md: "12px", sm: "12px", lg: "0" }}>
-              <Select
-                color="white"
-                w={"150px"}
-                borderColor="cyan.400"
-                variant="outline"
+              <CustomSelect
+                options={options}
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-              >
-                {options.map((listOption) => {
-                  return (
-                    <option key={listOption.value} value={listOption.value}>
-                      {listOption.label}
-                    </option>
-                  );
-                })}
-              </Select>
+              />
 
               <CustomButton
                 onClick={handleSearchSubmit}

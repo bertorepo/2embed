@@ -12,11 +12,35 @@ import { useMovieContext } from "../../hooks/use-movie-context";
 import { usePaginate } from "../../hooks/use-paginate";
 import Pagination from "../../components/Pagination";
 import { useSearchTitle } from "../../hooks/use-search-title";
+import { useSortHook } from "../../hooks/use-sort-hook";
+import CustomSelect from "../../components/CustomSelect";
+import { HStack } from "@chakra-ui/react";
 
 function Library() {
   const { handleFilterData, currentType } = useFilterList();
   const { isLoading } = useLoader();
   const { movies } = useMovieContext();
+
+  // =====sort
+
+  const sortOptions = [
+    {
+      label: "Latest",
+      value: "desc",
+    },
+    {
+      label: "Oldest",
+      value: "asc",
+    },
+  ];
+  const sortValueConfig = (movie) => movie.Year;
+
+  const { sortedList, onChangeSort, sortBy } = useSortHook(
+    movies,
+    sortValueConfig
+  );
+
+  // ====== end sort
 
   const {
     currentItems,
@@ -25,7 +49,7 @@ function Library() {
     setSelectedPage,
     handlePageClick,
     setCurrentPageNumber,
-  } = usePaginate(movies, 20);
+  } = usePaginate(sortedList, 20);
 
   const { handleSearch, handleOnChangeTitle, searchTitle } = useSearchTitle();
 
@@ -33,6 +57,9 @@ function Library() {
     setCurrentPageNumber(0);
     setSelectedPage(0);
   }, [movies, setCurrentPageNumber, setSelectedPage]);
+
+  // listen for new movies arr
+  // change into desc by default
 
   return (
     <BoxContainer>
@@ -57,14 +84,24 @@ function Library() {
           </CustomButton>
         </ButtonGroup>
 
-        {/* search */}
-        <InputField
-          type="text"
-          value={searchTitle}
-          onChange={(e) => handleOnChangeTitle(e)}
-          onKeyDown={(e) => handleSearch(e, currentType)}
-          placeholder={`Search ${currentType}`}
-        />
+        {/* sortby */}
+
+        <HStack>
+          <CustomSelect
+            options={sortOptions}
+            value={sortBy}
+            onChange={(e) => onChangeSort(e.target.value)}
+          />
+
+          {/* search */}
+          <InputField
+            type="text"
+            value={searchTitle}
+            onChange={(e) => handleOnChangeTitle(e)}
+            onKeyDown={(e) => handleSearch(e, currentType)}
+            placeholder={`Search ${currentType}`}
+          />
+        </HStack>
       </Header>
       {/* display list of movies / shows */}
 
