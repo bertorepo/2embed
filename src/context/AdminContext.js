@@ -1,10 +1,28 @@
 import { createContext, useCallback, useState } from "react";
+import { redirect } from "react-router-dom";
 import { searchMovie } from "../api/movie-api";
 
 const AdminContext = createContext();
 
+const initialUserConfig = {
+  name: "",
+  isSignedIn: false,
+};
+
 const AdminContextProvider = ({ children }) => {
   const [listData, setListData] = useState([]);
+  const [currentUser, setCurrentUser] = useState(initialUserConfig);
+
+  const signOut = () => {
+    setCurrentUser({ ...initialUserConfig, isSignedIn: false });
+    if (!currentUser.isSignedIn) {
+      return redirect("/");
+    }
+  };
+
+  const authenticateUser = () => {
+    setCurrentUser({ ...initialUserConfig, isSignedIn: true });
+  };
 
   const findMovie = useCallback(async (title, type) => {
     const results = await searchMovie(title, type);
@@ -19,6 +37,9 @@ const AdminContextProvider = ({ children }) => {
     findMovie,
     listData,
     setListData,
+    currentUser,
+    signOut,
+    authenticateUser,
   };
 
   return (

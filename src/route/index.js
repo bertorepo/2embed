@@ -20,6 +20,7 @@ export const mainRoot = createBrowserRouter(
       <Route path="/library" element={<Library />} />
       <Route path="/library/movie/:imdb" element={<MoviePage />} />
       <Route path="/library/series/:imdb" element={<MoviePage />} />
+
       <Route path="/admin" element={<AdminPage />} />
       <Route path="/admin/add" element={<AddMoviePage />} />
       <Route path="/admin/season/:imdb" element={<SeasonsPage />} />

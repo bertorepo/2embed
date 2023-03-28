@@ -1,13 +1,10 @@
-import Loader from "../../components/Loader";
-import useLoader from "../../hooks/use-loader";
-import MoviePage from "../movie/MoviePage";
+import { Outlet } from "react-router-dom";
+import Library from "../library/Library";
 
 function Dashboard() {
-  const { isLoading } = useLoader();
-
   return (
     <>
-      <h1>HOME</h1>
+      <Outlet />
     </>
   );
 }

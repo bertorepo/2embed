@@ -7,7 +7,7 @@ import theme from "./theme";
 
 import MainProvider from "./context";
 
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 import { mainRoot } from "./route";
 
 const el = document.getElementById("root");
@@ -19,9 +19,9 @@ root.render(
     <ColorModeScript initialColorMode="dark" />
     <ChakraProvider theme={theme}>
       <MainProvider>
-        <RouterProvider router={mainRoot}>
+        <BrowserRouter>
           <App />
-        </RouterProvider>
+        </BrowserRouter>
       </MainProvider>
     </ChakraProvider>
   </>

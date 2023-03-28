@@ -5,7 +5,6 @@ function Root() {
   return (
     <>
       <AppBar />
-      <Outlet />
     </>
   );
 }
