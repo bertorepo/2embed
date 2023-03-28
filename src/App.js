@@ -10,6 +10,7 @@ import { useAdminContext } from "./hooks/use-admin-context";
 import ErrorPage from "./components/ErrorPage";
 import Protected from "./pages/admin/components/Protected";
 import Home from "./pages/Home";
+import Login from "./pages/login/Login";
 
 function App() {
   const { currentUser } = useAdminContext();
@@ -49,6 +50,7 @@ function App() {
               </Protected>
             }
           />
+          <Route path="/authenticate" element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

@@ -171,18 +171,9 @@ function AppBar() {
                 }}
                 columnGap={3}
               >
-                {/* <CustomLink to="/authenticate" style={isActiveStyle}>
-                  <NavLink >Login</NavLink>
-                </CustomLink> */}
-
-                <CustomButton
-                  onClick={authenticateUser}
-                  bg="cyan.600"
-                  rounded
-                  size={"sm"}
-                >
-                  Login
-                </CustomButton>
+                <CustomLink to="/authenticate" style={isActiveStyle}>
+                  <NavLink>Login</NavLink>
+                </CustomLink>
               </Flex>
             )}
           </Flex>
