@@ -5,7 +5,7 @@ function Home() {
   return (
     <BoxContainer mt={5}>
       <Center>
-        <Text fon>Welcome to 2Embed</Text>
+        <Text>Welcome to 2Embed</Text>
       </Center>
     </BoxContainer>
   );

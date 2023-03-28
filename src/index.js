@@ -18,11 +18,11 @@ root.render(
   <>
     <ColorModeScript initialColorMode="dark" />
     <ChakraProvider theme={theme}>
-      <MainProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <MainProvider>
           <App />
-        </BrowserRouter>
-      </MainProvider>
+        </MainProvider>
+      </BrowserRouter>
     </ChakraProvider>
   </>
 );

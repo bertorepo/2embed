@@ -10,11 +10,13 @@ import { useFilterList } from "../../hooks/use-filter-list";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import Pagination from "../../components/Pagination";
 import { usePaginate } from "../../hooks/use-paginate";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import EmptyPage from "../../components/EmptyPage";
 import useLoader from "../../hooks/use-loader";
 import Loader from "../../components/Loader";
 import { useSearchTitle } from "../../hooks/use-search-title";
+import { useEffect } from "react";
+import { useAdminContext } from "../../hooks/use-admin-context";
 
 function AdminPage() {
   const { movies, deleteMovieOrEpisode, filterData } = useMovieContext();
