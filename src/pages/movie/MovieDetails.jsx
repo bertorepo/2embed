@@ -4,7 +4,13 @@ function MovieDetails({ info, children, ...rest }) {
   const { imdbID, Plot, Genre, Runtime, Title, Poster } = info;
   const plotStr = Plot && Plot.split(".")[0];
   return (
-    <Box {...rest} display={"flex"} columnGap={6} alignItems={"start"}>
+    <Box
+      {...rest}
+      display={"flex"}
+      flexWrap="wrap"
+      gap={4}
+      alignItems={"start"}
+    >
       <Image
         w={"150px"}
         objectFit="cover"
@@ -19,8 +25,9 @@ function MovieDetails({ info, children, ...rest }) {
         display={"flex"}
         flexDirection={"column"}
         h={"full"}
-        rowGap={3}
+        gap={3}
         justify="start"
+        width={"lg"}
       >
         <Text fontSize={"xl"}>{Title}</Text>
         <Text color={"gray.400"} fontSize={"sm"}>

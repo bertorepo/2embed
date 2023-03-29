@@ -94,8 +94,9 @@ function MoviePage() {
         alignItems="center"
         maxW={"5xl"}
         mx="auto"
+        h={"full"}
       >
-        <Box rounded={"lg"} width={"full"} height={{ sm: "sm", md: "lg" }}>
+        <Box rounded={"lg"} width={"full"} height={"60vh"}>
           {details.Type === "movie" ? (
             <Iframe src={imdb} />
           ) : (
