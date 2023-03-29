@@ -27,21 +27,21 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const isAuthenticated = await authenticateUser(loginDetails);
-    console.log(isAuthenticated);
-    // setLoginDetails({
-    //   username: "",
-    //   password: "",
-    // });
+    await authenticateUser(loginDetails);
+
+    setLoginDetails({
+      username: "",
+      password: "",
+    });
   };
 
   return (
     <BoxContainer display="flex" alignItems="center" h={"70vh"} mt={10}>
       <Box
         boxShadow="xl"
-        p={12}
+        w={"sm"}
+        p={6}
         bg="blackAlpha.500"
-        width={{ sm: "md", md: "md", xl: "lg" }}
         rounded="lg"
         mx={"auto"}
         h={"sm"}
@@ -59,6 +59,7 @@ function Login() {
             <Box>
               <FormLabel color="cyan.600">Username</FormLabel>
               <InputField
+                w={"auto"}
                 id={userId}
                 value={loginDetails.username}
                 onChange={(e) =>
@@ -72,6 +73,7 @@ function Login() {
             <Box>
               <FormLabel color="cyan.600">Password</FormLabel>
               <InputField
+                w={"auto"}
                 id={passId}
                 value={loginDetails.password}
                 onChange={(e) =>

@@ -69,7 +69,7 @@ function AppBar() {
 
   return (
     <>
-      <Box bg="blackAlpha.500" px={4}>
+      <Box bg="blackAlpha.600" px={4} w={"auto"}>
         <Container maxW="8xl">
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <IconButton
