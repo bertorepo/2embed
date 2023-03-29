@@ -12,6 +12,7 @@ function Card({ movie }) {
     <>
       <Link to={linkParams}>
         <Box
+          display={"flex"}
           bg="gray.900"
           rounded={"lg"}
           h={"full"}
@@ -19,7 +20,6 @@ function Card({ movie }) {
           alignItems="center"
           p={4}
           boxShadow={"2xl"}
-          display={"flex"}
           flexDirection={"column"}
           cursor={"pointer"}
           _hover={{
@@ -41,6 +41,7 @@ function Card({ movie }) {
           <Box
             display={"flex"}
             flexDirection="column"
+            w={"full"}
             sx={{
               marginTop: "auto",
               padding: "4px 8px",
