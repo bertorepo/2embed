@@ -157,6 +157,12 @@ function AddMoviePage() {
   return (
     <BoxContainer>
       <Header
+        display="flex"
+        alignItems={{ sm: "center", xxl: "center" }}
+        justifyContent={"space-between"}
+        gap={4}
+        flexWrap="wrap"
+        alignContent="center"
         pageHeading="Add Movie / Series"
         pageSubHeading="Browse movie/serfies to be added"
       ></Header>
@@ -177,10 +183,9 @@ function AddMoviePage() {
         >
           <Box
             display="flex"
-            justifyContent={{ sm: "center", lg: "end", md: "center" }}
-            flexDirection={{ md: "column", lg: "row", sm: "column" }}
+            justifyContent="center"
             alignItems={{ sm: "center", md: "center" }}
-            columnGap={2}
+            gap={4}
             flexWrap="wrap"
           >
             <InputField

@@ -9,14 +9,14 @@ import {
 } from "@chakra-ui/react";
 import { useId } from "react";
 import { useState } from "react";
-import { Navigate, redirect } from "react-router-dom";
+
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
 import { useAdminContext } from "../../hooks/use-admin-context";
 import BoxContainer from "../../layout/BoxContainer";
 
 function Login() {
-  const { authenticateUser, currentUser } = useAdminContext();
+  const { authenticateUser } = useAdminContext();
   const [loginDetails, setLoginDetails] = useState({
     username: "",
     password: "",

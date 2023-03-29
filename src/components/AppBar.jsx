@@ -24,7 +24,6 @@ import { NavLink as CustomLink, Link as RouterLink } from "react-router-dom";
 
 import logoImage from "../assets/images/logo.png";
 import { useAdminContext } from "../hooks/use-admin-context";
-import CustomButton from "./CustomButton";
 
 const navLinks = [
   {
@@ -57,7 +56,7 @@ const NavLink = ({ children }) => {
 
 function AppBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { currentUser, authenticateUser, signOut } = useAdminContext();
+  const { currentUser, signOut } = useAdminContext();
 
   const isActiveStyle = ({ isActive }) => {
     return {

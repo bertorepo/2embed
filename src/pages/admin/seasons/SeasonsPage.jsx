@@ -123,6 +123,12 @@ function SeasonsPage() {
   return (
     <BoxContainer p={4}>
       <Header
+        display="flex"
+        alignItems={{ sm: "center", xxl: "center" }}
+        justifyContent={"space-between"}
+        gap={4}
+        flexWrap="wrap"
+        alignContent="center"
         pageHeading="Series / Seasons"
         pageSubHeading="Get Episodes and Seasons"
       />
