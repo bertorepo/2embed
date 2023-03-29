@@ -1,8 +1,8 @@
 function Iframe({ src, episode, season }) {
-  let renderedEmbed = `https://www.2embed.org/embed/imdb/movie?id=${src}`;
+  let renderedEmbed = `https://www.2embed.org/embed/movie?imdb=${src}`;
 
   if (episode && season) {
-    renderedEmbed = `https://www.2embed.org/embed/imdb/tv?id=${src}&s=${season}&e=${episode}`;
+    renderedEmbed = `https://www.2embed.org/embed/series?imdb=${src}&s=${season}&e=${episode}`;
   }
 
   return (
