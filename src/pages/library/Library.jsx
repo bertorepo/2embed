@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
 import Loader from "../../components/Loader";
@@ -14,7 +14,7 @@ import Pagination from "../../components/Pagination";
 import { useSearchTitle } from "../../hooks/use-search-title";
 import { useSortHook } from "../../hooks/use-sort-hook";
 import CustomSelect from "../../components/CustomSelect";
-import { HStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 function Library() {
   const { handleFilterData, currentType } = useFilterList();
@@ -63,8 +63,17 @@ function Library() {
 
   return (
     <BoxContainer>
-      <Header pageHeading="Library" pageSubHeading="Latest Movies and Tv Shows">
-        <ButtonGroup>
+      <Header
+        display="flex"
+        alignItems={{ sm: "center", xxl: "center" }}
+        justifyContent={"space-between"}
+        gap={4}
+        flexWrap="wrap"
+        alignContent="center"
+        pageHeading="Library"
+        pageSubHeading="Latest Movies and Tv Shows"
+      >
+        <ButtonGroup my={{ sm: 4 }}>
           <CustomButton
             isActive={currentType === "movie" ? true : false}
             rounded
@@ -85,8 +94,7 @@ function Library() {
         </ButtonGroup>
 
         {/* sortby */}
-
-        <HStack>
+        <Box display="flex" flexWrap="wrap" gap={4} alignItems="center">
           <CustomSelect
             options={sortOptions}
             value={sortBy}
@@ -95,13 +103,14 @@ function Library() {
 
           {/* search */}
           <InputField
+            w={"full"}
             type="text"
             value={searchTitle}
             onChange={(e) => handleOnChangeTitle(e)}
             onKeyDown={(e) => handleSearch(e, currentType)}
             placeholder={`Search ${currentType}`}
           />
-        </HStack>
+        </Box>
       </Header>
       {/* display list of movies / shows */}
 

@@ -10,13 +10,11 @@ import { useFilterList } from "../../hooks/use-filter-list";
 import { useMovieContext } from "../../hooks/use-movie-context";
 import Pagination from "../../components/Pagination";
 import { usePaginate } from "../../hooks/use-paginate";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import EmptyPage from "../../components/EmptyPage";
 import useLoader from "../../hooks/use-loader";
 import Loader from "../../components/Loader";
 import { useSearchTitle } from "../../hooks/use-search-title";
-import { useEffect } from "react";
-import { useAdminContext } from "../../hooks/use-admin-context";
 
 function AdminPage() {
   const { movies, deleteMovieOrEpisode, filterData } = useMovieContext();
@@ -100,8 +98,17 @@ function AdminPage() {
 
   return (
     <BoxContainer>
-      <Header pageHeading="Admin Area" pageSubHeading="Manage Movies and Shows">
-        <ButtonGroup>
+      <Header
+        display="flex"
+        alignItems={{ sm: "center", xxl: "center" }}
+        justifyContent={"space-between"}
+        gap={4}
+        flexWrap="wrap"
+        alignContent="center"
+        pageHeading="Admin Area"
+        pageSubHeading="Manage Movies and Shows"
+      >
+        <ButtonGroup my={{ sm: 4 }}>
           <CustomButton
             isActive={currentType === "movie" ? true : false}
             onClick={() => handleClick("movie")}
@@ -120,14 +127,17 @@ function AdminPage() {
           </CustomButton>
         </ButtonGroup>
 
-        {/* use for search */}
-        <InputField
-          type="text"
-          value={searchTitle}
-          onChange={(e) => handleOnChangeTitle(e)}
-          onKeyDown={(e) => handleSearch(e, currentType)}
-          placeholder={`Search ${currentType}`}
-        />
+        <Box display="flex" flexWrap="wrap" gap={4} alignItems="center">
+          {/* use for search */}
+          <InputField
+            w="300px"
+            type="text"
+            value={searchTitle}
+            onChange={(e) => handleOnChangeTitle(e)}
+            onKeyDown={(e) => handleSearch(e, currentType)}
+            placeholder={`Search ${currentType}`}
+          />
+        </Box>
       </Header>
 
       {/* table */}

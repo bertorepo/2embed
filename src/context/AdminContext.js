@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState } from "react";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { searchMovie } from "../api/movie-api";
 
 import axios from "axios";

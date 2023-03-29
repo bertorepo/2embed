@@ -10,7 +10,7 @@ function CardsList({ movies }) {
       return <Card key={movie.id} movie={movie} />;
     });
   return (
-    <Box mx={4} mt={10}>
+    <Box mt={10}>
       <Flex
         alignItems="stretch"
         justify="center"

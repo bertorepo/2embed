@@ -1,6 +1,6 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 
-function Header({ children, pageHeading, pageSubHeading }) {
+function Header({ children, pageHeading, pageSubHeading, ...rest }) {
   return (
     <>
       <Box mt={10}>
@@ -11,9 +11,7 @@ function Header({ children, pageHeading, pageSubHeading }) {
       </Box>
 
       <Flex
-        flexDirection={{ sm: "column", md: "row" }}
-        justifyContent="space-between"
-        alignItems="center"
+        {...rest}
         sx={{
           marginTop: "18px",
         }}

@@ -4,11 +4,9 @@ import {
   FormControl,
   Flex,
   HStack,
-  Select,
   useDisclosure,
   ModalBody,
   ModalFooter,
-  Text,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
@@ -183,6 +181,7 @@ function AddMoviePage() {
             flexDirection={{ md: "column", lg: "row", sm: "column" }}
             alignItems={{ sm: "center", md: "center" }}
             columnGap={2}
+            flexWrap="wrap"
           >
             <InputField
               type="text"

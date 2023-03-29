@@ -14,45 +14,48 @@ import Login from "./pages/login/Login";
 import { useEffect } from "react";
 
 function App() {
-  const { currentUser } = useAdminContext();
+  const { currentUser, getUserDetails } = useAdminContext();
+
+  useEffect(() => {
+    getUserDetails();
+  }, [getUserDetails]);
 
   return (
     <>
       <AppBar />
       <Routes>
-        <Route path="/" element={<Dashboard />}>
-          <Route index element={<Home />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/library/movie/:imdb" element={<MoviePage />} />
-          <Route path="/library/series/:imdb" element={<MoviePage />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route index element={<Home />} />
+        <Route path="/library" element={<Library />} />
+        <Route path="movie/:imdb" element={<MoviePage />} />
+        <Route path="series/:imdb" element={<MoviePage />} />
 
-          <Route
-            path="/admin"
-            element={
-              <Protected currentUser={currentUser}>
-                <AdminPage />
-              </Protected>
-            }
-          />
-          <Route
-            path="/admin/add"
-            element={
-              <Protected currentUser={currentUser}>
-                <AddMoviePage />
-              </Protected>
-            }
-          />
-          <Route
-            path="/admin/season/:imdb"
-            element={
-              <Protected currentUser={currentUser}>
-                <SeasonsPage />
-              </Protected>
-            }
-          />
-          <Route path="/authenticate" element={<Login />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
+        <Route
+          path="/admin"
+          element={
+            <Protected currentUser={currentUser}>
+              <AdminPage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/admin/add"
+          element={
+            <Protected currentUser={currentUser}>
+              <AddMoviePage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/admin/season/:imdb"
+          element={
+            <Protected currentUser={currentUser}>
+              <SeasonsPage />
+            </Protected>
+          }
+        />
+        <Route path="/authenticate" element={<Login />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
   );

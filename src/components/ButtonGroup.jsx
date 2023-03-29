@@ -1,8 +1,8 @@
 import { Box, ButtonGroup as Group } from "@chakra-ui/react";
 
-function ButtonGroup({ children }) {
+function ButtonGroup({ children, ...rest }) {
   return (
-    <Box as={Group} p={4} isAttached>
+    <Box {...rest} as={Group} isAttached>
       {children}
     </Box>
   );

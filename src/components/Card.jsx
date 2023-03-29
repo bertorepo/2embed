@@ -5,15 +5,18 @@ import { capitalizeFirstLetter } from "../utils/";
 
 function Card({ movie }) {
   const linkParams =
-    movie.Type === "movie" ? `movie/${movie.imdbID}` : `series/${movie.imdbID}`;
+    movie.Type === "movie"
+      ? `/movie/${movie.imdbID}`
+      : `/series/${movie.imdbID}`;
   return (
     <>
       <Link to={linkParams}>
         <Box
-          maxW={"230px"}
           bg="gray.900"
-          w={"full"}
           rounded={"lg"}
+          h={"full"}
+          width={"180px"}
+          alignItems="center"
           p={4}
           boxShadow={"2xl"}
           display={"flex"}
@@ -23,19 +26,15 @@ function Card({ movie }) {
             bg: "blackAlpha.600",
             transition: "all .8s",
           }}
-          sx={{
-            height: "full",
-          }}
         >
           <Image
             objectFit="cover"
             objectPosition="center"
             src={`${movie.Poster}`}
             rounded={"md"}
+            width={"160px"}
             sx={{
               marginBottom: "4px",
-              height: "280px",
-              width: "250px",
             }}
           />
 
@@ -47,7 +46,7 @@ function Card({ movie }) {
               padding: "4px 8px",
             }}
           >
-            <Text fontSize="md" color="gray.400">
+            <Text fontSize="13px" color="gray.400">
               {movie.Title}
             </Text>
             <Box
