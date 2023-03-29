@@ -94,7 +94,7 @@ function Library() {
         </ButtonGroup>
 
         {/* sortby */}
-        <Box display="flex" flexWrap="wrap" gap={4} alignItems="center">
+        <Box display="flex" gap={4} alignItems="center">
           <CustomSelect
             options={sortOptions}
             value={sortBy}
