@@ -1,10 +1,9 @@
 import BoxContainer from "../../layout/BoxContainer";
-import { Box, HStack, Text } from "@chakra-ui/react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { Box } from "@chakra-ui/react";
 import Iframe from "../../components/Iframe";
 import MovieDetails from "./MovieDetails";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useLoader from "../../hooks/use-loader";
 import Loader from "../../components/Loader";
 import { useMovieContext } from "../../hooks/use-movie-context";

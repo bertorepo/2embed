@@ -1,7 +1,7 @@
 import { Box, Text, Image } from "@chakra-ui/react";
 
 function MovieDetails({ info, children, ...rest }) {
-  const { imdbID, Plot, Genre, Runtime, Title, Poster } = info;
+  const { Plot, Genre, Runtime, Title, Poster } = info;
   const plotStr = Plot && Plot.split(".")[0];
   return (
     <Box
